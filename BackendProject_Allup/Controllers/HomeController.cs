@@ -18,6 +18,7 @@ namespace BackendProject_Allup.Controllers
 
         public IActionResult Index()
         {
+
             HomeVM home = new HomeVM();
             home.Sliders = _context.Sliders.ToList();
             home.Categories=_context.Categories.ToList();

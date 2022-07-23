@@ -18,7 +18,7 @@ namespace BackendProject_Allup.Controllers
         }
 
 
-        public async Task<IActionResult> Index(int page = 1, int pageSize = 5)
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 6)
         {
             ShopVM shopVM = new ShopVM()
             {

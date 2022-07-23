@@ -13,7 +13,7 @@ namespace BackendProject_Allup.ViewComponents
             _context = context;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(int take)
+        public async Task<IViewComponentResult> InvokeAsync()
         {
 
             Bio bio = _context.Bios.FirstOrDefault();

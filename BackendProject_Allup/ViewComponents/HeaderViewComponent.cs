@@ -1,0 +1,24 @@
+﻿using BackendProject_Allup.DAL;
+using BackendProject_Allup.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace BackendProject_Allup.ViewComponents
+{
+    public class HeaderViewComponent: ViewComponent
+    {
+        private readonly AppDbContext _context;
+
+        public HeaderViewComponent(AppDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            Bio bio = _context.Bios.FirstOrDefault();
+
+
+            return View(await Task.FromResult(bio));
+        }
+    }
+}

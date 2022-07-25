@@ -2,6 +2,7 @@
 using BackendProject_Allup.Helpers;
 using BackendProject_Allup.Models;
 using BackendProject_Allup.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,10 +12,12 @@ namespace BackendProject_Allup.Controllers
     {
 
         private readonly AppDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public ShopController(AppDbContext context)
+        public ShopController(AppDbContext context, Microsoft.AspNetCore.Identity.UserManager<AppUser> userManager = null)
         {
             _context = context;
+            _userManager = userManager;
         }
 
 
@@ -36,12 +39,16 @@ namespace BackendProject_Allup.Controllers
             return View(list);
         }
 
-        public IActionResult Detail(int? id, string name)
+        public async Task<IActionResult> Detail(int? id, string name)
         {
             if (id == null)
             {
                 return NotFound();
             }
+
+
+            AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+
 
             ShopVM shopVM = new ShopVM();
 
@@ -56,11 +63,46 @@ namespace BackendProject_Allup.Controllers
 
             shopVM.Product = dbProcduct;
             shopVM.Categories = _context.Categories.ToList();
+            shopVM.Products=_context.Products.Include(p=>p.ProductImages).ToList();
+            shopVM.Brands=_context.Brands.ToList();
             shopVM.Reviews = _context.Reviews.ToList();
+            shopVM.Username = user.FullName;
+            shopVM.Comments = _context.Comments.Include(c=>c.User).Where(c => c.ProductId == dbProcduct.Id).ToList();
 
 
             return View(shopVM);
 
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> AddComment(int productId, string content)
+        {
+            if (content==null) return View();
+
+            AppUser user = new AppUser();
+            if (User.Identity.IsAuthenticated)
+            {
+                user = await _userManager.FindByNameAsync(User.Identity.Name);
+            }
+            else
+            {
+                return RedirectToAction("login", "account");
+            }
+
+            Comment newComment = new Comment
+            {
+                Content = content,
+                UserId = user.Id,
+                ProductId = productId,
+                CreatedAt = DateTime.Now
+            };
+
+            await _context.AddAsync(newComment);
+            _context.SaveChanges();
+
+            return RedirectToAction("detail", new { id = productId });
+        }
+
     }
 }

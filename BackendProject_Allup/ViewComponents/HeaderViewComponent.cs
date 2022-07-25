@@ -1,5 +1,6 @@
 ﻿using BackendProject_Allup.DAL;
 using BackendProject_Allup.Models;
+using BackendProject_Allup.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,18 +18,23 @@ namespace BackendProject_Allup.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
+            HomeVM home = new HomeVM();
+            home.Categories = _context.Categories.ToList();
 
-            ViewBag.UserName = "";
+
+            home.Username = "";
+
+            ViewBag.Category = home.Categories;
 
             if (User.Identity.IsAuthenticated)
             {
                 AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
-                ViewBag.UserName = user.FullName.Split(" ")[0];
+                home.Username = user.FullName.Split(" ")[0];
             }
-            Bio bio = _context.Bios.FirstOrDefault();
+            home.Bio = _context.Bios.FirstOrDefault();
 
 
-            return View(await Task.FromResult(bio));
+            return View(await Task.FromResult(home));
         }
     }
 }

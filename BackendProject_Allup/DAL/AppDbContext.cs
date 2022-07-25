@@ -24,6 +24,7 @@ namespace BackendProject_Allup.DAL
         public DbSet<Banner> Banners { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<TagProduct> TagProducts { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

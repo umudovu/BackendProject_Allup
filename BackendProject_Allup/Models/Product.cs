@@ -21,6 +21,7 @@
         public List<TagProduct>? TagProducts { get; set; }  
         public List<OrderItem>? OrderItems { get; set; }
         public List<BasketItem>? BasketItems { get; set; }
+        public List<Comment> Comments { get; set; }
 
 
     }

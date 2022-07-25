@@ -9,5 +9,9 @@ namespace BackendProject_Allup.ViewModels
         public Product Product { get; set; }
         public List<Banner> Banners { get; set; }
         public List<Review> Reviews { get; set; }
+        public List<Brand> Brands { get; set; }
+        public List<Comment> Comments { get; set; }
+        public string Username { get; set; }
+
     }
 }

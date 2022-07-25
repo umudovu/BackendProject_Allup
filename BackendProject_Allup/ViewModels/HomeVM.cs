@@ -8,6 +8,8 @@ namespace BackendProject_Allup.ViewModels
         public List<Category> Categories { get; set; }
         public List<Product> Products { get; set; }
         public List<Brand> Brands { get; set; }
+        public string Username { get; set; }
+        public Bio Bio { get; set; }
 
     }
 }

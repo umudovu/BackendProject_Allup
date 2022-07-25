@@ -27,11 +27,24 @@ namespace BackendProject_Allup.Controllers
                     .Include(p => p.Brand)
                     .Include(p => p.Category)
                     .ToList();
+            home.Brands=_context.Brands.ToList();
 
 
             return View(home);
         }
+        public IActionResult Detail(int? id)
+        {
+            if (id == null) return NotFound();
+            var product = _context.Products
+                .Include(p => p.ProductImages)
+                .Include(p => p.Brand)
+                .Include(p => p.Category)
+                .FirstOrDefault(p => p.Id == id);
 
-        
+            if (product == null) return NotFound();
+
+            return PartialView("_PartialProductModal", product);
+        }
+
     }
 }

@@ -1,0 +1,73 @@
+﻿@model List<Brand>
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+	int count = 0;
+}
+
+	<div class="main-container">
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+				
+						<!-- Simple Datatable start -->
+				<div class="card-box mb-30">
+						
+					<div class="pb-20 pt-20">
+								<table class="data-table table stripe hover nowrap container">
+									<thead>
+										<tr>
+											<th class="col-1" >Number</th>
+											<th class="datatable-nosort">Image</th>
+											<th>Name</th>
+											<th>Creat Date</th>
+											<th class="datatable-nosort">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var item in Model)
+							{
+								count++;
+
+											<tr>
+											<td class="table-plus">@count</td>
+											<td><img width="100"  src="~/assets/@item.ImageUrl" /></td>
+											<td>@item.Name</td>
+											<td>@item.CreatedAt</td>
+											<td>
+												<div class="dropdown">
+													<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+														<i class="dw dw-more"></i>
+													</a>
+													<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+														<a class="dropdown-item" asp-action="detail"><i class="dw dw-eye"></i> View</a>
+														<a class="dropdown-item" asp-action="update"><i class="dw dw-edit2"></i> Edit</a>
+														<a class="dropdown-item" asp-action="remove"><i class="dw dw-delete-3"></i> Delete</a>
+													</div>
+												</div>
+											</td>
+										</tr>
+										}
+									</tbody>
+								</table>
+							</div>
+				</div>
+						<!-- Simple Datatable End -->
+
+
+			</div>
+		</div>			
+	</div>
+
+		@section scripts {
+							<!-- buttons for Export datatable -->
+	<script src="src/plugins/datatables/js/dataTables.buttons.min.js"></script>
+	<script src="src/plugins/datatables/js/buttons.bootstrap4.min.js"></script>
+	<script src="src/plugins/datatables/js/buttons.print.min.js"></script>
+	<script src="src/plugins/datatables/js/buttons.html5.min.js"></script>
+	<script src="src/plugins/datatables/js/buttons.flash.min.js"></script>
+	<script src="src/plugins/datatables/js/pdfmake.min.js"></script>
+	<script src="src/plugins/datatables/js/vfs_fonts.js"></script>
+	<!-- Datatable Setting js -->
+	<script src="vendors/scripts/datatable-setting.js"></script>
+
+						}

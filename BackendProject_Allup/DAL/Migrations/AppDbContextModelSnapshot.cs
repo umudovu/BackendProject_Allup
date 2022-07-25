@@ -4,18 +4,16 @@ using BackendProject_Allup.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BackendProject_Allup.Migrations
+namespace BackendProject_Allup.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220722194524_mig1")]
-    partial class mig1
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,6 +93,23 @@ namespace BackendProject_Allup.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("BackendProject_Allup.Models.Banner", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Banners");
+                });
+
             modelBuilder.Entity("BackendProject_Allup.Models.BasketItem", b =>
                 {
                     b.Property<int>("Id")
@@ -121,6 +136,43 @@ namespace BackendProject_Allup.Migrations
                     b.ToTable("BasketItem");
                 });
 
+            modelBuilder.Entity("BackendProject_Allup.Models.Bio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Contact")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SupportContact")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WorkTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Bios");
+                });
+
             modelBuilder.Entity("BackendProject_Allup.Models.Brand", b =>
                 {
                     b.Property<int>("Id")
@@ -135,6 +187,10 @@ namespace BackendProject_Allup.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -148,6 +204,88 @@ namespace BackendProject_Allup.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Brands");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 30, DateTimeKind.Local).AddTicks(9897),
+                            ImageUrl = "images/brand/brand-1.jpg",
+                            IsDeleted = false,
+                            Name = "Adidas"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 30, DateTimeKind.Local).AddTicks(9935),
+                            ImageUrl = "images/brand/brand-2.jpg",
+                            IsDeleted = false,
+                            Name = "Samsung"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 30, DateTimeKind.Local).AddTicks(9951),
+                            ImageUrl = "images/brand/brand-3.jpg",
+                            IsDeleted = false,
+                            Name = "Asus"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 30, DateTimeKind.Local).AddTicks(9963),
+                            ImageUrl = "images/brand/brand-4.jpg",
+                            IsDeleted = false,
+                            Name = "Philips"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 30, DateTimeKind.Local).AddTicks(9977),
+                            ImageUrl = "images/brand/brand-5.jpg",
+                            IsDeleted = false,
+                            Name = "Sony"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 30, DateTimeKind.Local).AddTicks(9996),
+                            ImageUrl = "images/brand/brand-6.jpg",
+                            IsDeleted = false,
+                            Name = "Xiaomi"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(10),
+                            ImageUrl = "images/brand/brand-3.jpg",
+                            IsDeleted = false,
+                            Name = "Apple"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(24),
+                            ImageUrl = "images/brand/brand-4.jpg",
+                            IsDeleted = false,
+                            Name = "Gucci"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(37),
+                            ImageUrl = "images/brand/brand-1.jpg",
+                            IsDeleted = false,
+                            Name = "Pegasus"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(53),
+                            ImageUrl = "images/brand/brand-5.jpg",
+                            IsDeleted = false,
+                            Name = "Logitech"
+                        });
                 });
 
             modelBuilder.Entity("BackendProject_Allup.Models.Category", b =>
@@ -184,6 +322,116 @@ namespace BackendProject_Allup.Migrations
                     b.HasIndex("ParentId");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(78),
+                            ImageUrl = "images/category-1.jpg",
+                            IsDeleted = false,
+                            Name = "Laptop",
+                            ParentId = 1
+                        },
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(97),
+                            ImageUrl = "images/category-2.jpg",
+                            IsDeleted = false,
+                            Name = "Computer"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(111),
+                            ImageUrl = "images/category-3.jpg",
+                            IsDeleted = false,
+                            Name = "Smartphone"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(124),
+                            ImageUrl = "images/category-4.jpg",
+                            IsDeleted = false,
+                            Name = "Game Consoles"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(137),
+                            ImageUrl = "images/category-5.jpg",
+                            IsDeleted = false,
+                            Name = "Bottoms"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(221),
+                            ImageUrl = "images/category-6.jpg",
+                            IsDeleted = false,
+                            Name = "Tops & Sets"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(240),
+                            ImageUrl = "images/category-7.jpg",
+                            IsDeleted = false,
+                            Name = "Audio & Video"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(254),
+                            ImageUrl = "images/category-10.jpg",
+                            IsDeleted = false,
+                            Name = "Camera",
+                            ParentId = 7
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(269),
+                            ImageUrl = "images/category-9.jpg",
+                            IsDeleted = false,
+                            Name = "Household"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(285),
+                            ImageUrl = "images/category-8.jpg",
+                            IsDeleted = false,
+                            Name = "Accessories"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(299),
+                            ImageUrl = "images/category-11.jpg",
+                            IsDeleted = false,
+                            Name = "Michrophone",
+                            ParentId = 7
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(313),
+                            ImageUrl = "images/category-12.jpg",
+                            IsDeleted = false,
+                            Name = "Video Games",
+                            ParentId = 4
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(326),
+                            ImageUrl = "images/category-1.jpg",
+                            IsDeleted = false,
+                            Name = "Technologics"
+                        });
                 });
 
             modelBuilder.Entity("BackendProject_Allup.Models.Order", b =>
@@ -330,6 +578,127 @@ namespace BackendProject_Allup.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BestSeller = false,
+                            BrandId = 10,
+                            CategoryId = 4,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(350),
+                            DiscountPrice = 30.0,
+                            InStock = true,
+                            IsDeleted = false,
+                            IsFeatured = false,
+                            Name = "Joystic Logitech g66",
+                            NewArrival = true,
+                            Price = 900.0,
+                            StockCount = 33,
+                            TaxPercent = 0.0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BestSeller = true,
+                            BrandId = 5,
+                            CategoryId = 10,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(375),
+                            DiscountPrice = 30.0,
+                            InStock = true,
+                            IsDeleted = false,
+                            IsFeatured = false,
+                            Name = "Qulaqliqs",
+                            NewArrival = false,
+                            Price = 250.0,
+                            StockCount = 30,
+                            TaxPercent = 0.0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BestSeller = false,
+                            BrandId = 4,
+                            CategoryId = 10,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(393),
+                            DiscountPrice = 0.0,
+                            InStock = true,
+                            IsDeleted = false,
+                            IsFeatured = true,
+                            Name = "Flashcard",
+                            NewArrival = false,
+                            Price = 75.0,
+                            StockCount = 25,
+                            TaxPercent = 0.0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            BestSeller = true,
+                            BrandId = 2,
+                            CategoryId = 7,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(408),
+                            DiscountPrice = 0.0,
+                            InStock = true,
+                            IsDeleted = false,
+                            IsFeatured = false,
+                            Name = "Printer (Samsung Yta-55)",
+                            NewArrival = true,
+                            Price = 300.0,
+                            StockCount = 25,
+                            TaxPercent = 0.0
+                        },
+                        new
+                        {
+                            Id = 5,
+                            BestSeller = false,
+                            BrandId = 2,
+                            CategoryId = 13,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(425),
+                            DiscountPrice = 0.0,
+                            InStock = true,
+                            IsDeleted = false,
+                            IsFeatured = true,
+                            Name = "Drone",
+                            NewArrival = true,
+                            Price = 3000.0,
+                            StockCount = 9,
+                            TaxPercent = 0.0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            BestSeller = true,
+                            BrandId = 1,
+                            CategoryId = 10,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(443),
+                            DiscountPrice = 0.0,
+                            InStock = true,
+                            IsDeleted = false,
+                            IsFeatured = true,
+                            Name = "Sunglasses",
+                            NewArrival = false,
+                            Price = 99.0,
+                            StockCount = 800,
+                            TaxPercent = 0.0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            BestSeller = false,
+                            BrandId = 3,
+                            CategoryId = 13,
+                            CreatedAt = new DateTime(2022, 7, 25, 21, 17, 6, 31, DateTimeKind.Local).AddTicks(459),
+                            DiscountPrice = 0.0,
+                            InStock = true,
+                            IsDeleted = false,
+                            IsFeatured = true,
+                            Name = "PhotoAparatte",
+                            NewArrival = false,
+                            Price = 199.0,
+                            StockCount = 75,
+                            TaxPercent = 0.0
+                        });
                 });
 
             modelBuilder.Entity("BackendProject_Allup.Models.ProductImage", b =>
@@ -367,6 +736,150 @@ namespace BackendProject_Allup.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductImages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ImageUrl = "images/product/product-3.jpg",
+                            IsDeleted = false,
+                            IsMain = true,
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ImageUrl = "images/product/product-9.jpg",
+                            IsDeleted = false,
+                            IsMain = false,
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ImageUrl = "images/product/product-1.jpg",
+                            IsDeleted = false,
+                            IsMain = true,
+                            ProductId = 4
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ImageUrl = "images/product/product-2.jpg",
+                            IsDeleted = false,
+                            IsMain = false,
+                            ProductId = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ImageUrl = "images/product/product-5.jpg",
+                            IsDeleted = false,
+                            IsMain = true,
+                            ProductId = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ImageUrl = "images/product/product-6.jpg",
+                            IsDeleted = false,
+                            IsMain = false,
+                            ProductId = 2
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ImageUrl = "images/product/product-14.jpg",
+                            IsDeleted = false,
+                            IsMain = true,
+                            ProductId = 5
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ImageUrl = "images/product/product-15.jpg",
+                            IsDeleted = false,
+                            IsMain = false,
+                            ProductId = 5
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ImageUrl = "images/product/product-8.jpg",
+                            IsDeleted = false,
+                            IsMain = true,
+                            ProductId = 3
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ImageUrl = "images/product/product-7.jpg",
+                            IsDeleted = false,
+                            IsMain = false,
+                            ProductId = 3
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ImageUrl = "images/product/product-13.jpg",
+                            IsDeleted = false,
+                            IsMain = true,
+                            ProductId = 6
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ImageUrl = "images/product/product-12.jpg",
+                            IsDeleted = false,
+                            IsMain = false,
+                            ProductId = 6
+                        },
+                        new
+                        {
+                            Id = 13,
+                            ImageUrl = "images/product/product-10.jpg",
+                            IsDeleted = false,
+                            IsMain = true,
+                            ProductId = 7
+                        },
+                        new
+                        {
+                            Id = 14,
+                            ImageUrl = "images/product/product-11.jpg",
+                            IsDeleted = false,
+                            IsMain = false,
+                            ProductId = 7
+                        });
+                });
+
+            modelBuilder.Entity("BackendProject_Allup.Models.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SendText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("BackendProject_Allup.Models.Slider", b =>
@@ -377,25 +890,29 @@ namespace BackendProject_Allup.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("About")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Desc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiscountSec")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ModelName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TitleAbout")
+                    b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -404,6 +921,26 @@ namespace BackendProject_Allup.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sliders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Desc = "Explore and immerse in exciting 360 content with Fulldive’s all-in-one virtual reality platform",
+                            DiscountSec = "Save $666 when you buy",
+                            ImageUrl = "images/slider-1.jpg",
+                            IsDeleted = false,
+                            Title = "2079 Virtual Reality"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Desc = "Qacirmayin",
+                            DiscountSec = "Endirimde",
+                            ImageUrl = "images/slider-2.jpg",
+                            IsDeleted = false,
+                            Title = "VR Cakera"
+                        });
                 });
 
             modelBuilder.Entity("BackendProject_Allup.Models.Tag", b =>
@@ -678,12 +1215,23 @@ namespace BackendProject_Allup.Migrations
             modelBuilder.Entity("BackendProject_Allup.Models.ProductImage", b =>
                 {
                     b.HasOne("BackendProject_Allup.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("ProductImages")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("BackendProject_Allup.Models.Review", b =>
+                {
+                    b.HasOne("BackendProject_Allup.Models.Product", "Products")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("BackendProject_Allup.Models.TagProduct", b =>
@@ -776,6 +1324,8 @@ namespace BackendProject_Allup.Migrations
                     b.Navigation("BasketItems");
 
                     b.Navigation("OrderItems");
+
+                    b.Navigation("ProductImages");
 
                     b.Navigation("TagProducts");
                 });

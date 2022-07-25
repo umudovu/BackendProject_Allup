@@ -1,0 +1,64 @@
+﻿
+@model RegisterVM
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Slide Navbar</title>
+	<link rel="stylesheet" type="text/css" href="~/account/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+	<div class="main">  	
+		<input type="checkbox" id="chk" aria-hidden="true">
+
+			<div class="signup">
+				<form method="post" asp-action="register">
+					<label for="chk" aria-hidden="true">Sign up</label>
+					<input asp-for="UserName"  class="form-control form-control-lg" placeholder="Username">
+					 <span asp-validation-for="UserName" class="text-danger"></span>
+
+					 <input asp-for="FullName"  class="form-control form-control-lg" placeholder="FullName">
+					 <span asp-validation-for="FullName" class="text-danger"></span>
+
+					 <input asp-for="Email"  class="form-control form-control-lg" placeholder="Email address">
+					 <span asp-validation-for="Email" class="text-danger"></span>
+
+					 <input asp-for="Password"  class="form-control form-control-lg" placeholder="Password">
+					 <span asp-validation-for="Password" class="text-danger"></span>
+
+					 <input asp-for="RepeatPassword"  class="form-control form-control-lg" placeholder="RepeatPassword">
+					 <span asp-validation-for="RepeatPassword" class="text-danger"></span>
+
+					 
+             
+					<button type="submit">Sign up</button>
+				</form>
+			</div>
+
+			<div class="login">
+				<form method="post" asp-action="login">
+					<label for="chk" aria-hidden="true">Login</label>
+					<input asp-for="Email"  class="form-control form-control-lg" placeholder="Email address">
+					 <span asp-validation-for="Email" class="text-danger"></span>
+					 <input asp-for="Password"  class="form-control form-control-lg" placeholder="Password">
+					 <span asp-validation-for="Password" class="text-danger"></span>
+					<button type="submit">Login</button>
+				</form>
+			</div>
+	</div>
+
+
+	 <!-- Jquery Validation cdn -->
+    
+</body>
+</html>
+<!-- partial -->
+  
+

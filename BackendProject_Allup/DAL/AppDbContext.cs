@@ -21,6 +21,8 @@ namespace BackendProject_Allup.DAL
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Bio> Bios { get; set; }
+        public DbSet<Banner> Banners { get; set; }
+        public DbSet<Review> Reviews { get; set; }
         public DbSet<TagProduct> TagProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -60,6 +62,7 @@ namespace BackendProject_Allup.DAL
                 {
                     Id = 1,
                     Name = "Adidas",
+                    ImageUrl= "images/brand/brand-1.jpg",
                     CreatedAt = DateTime.Now,
                 });
 
@@ -68,6 +71,7 @@ namespace BackendProject_Allup.DAL
                 {
                     Id = 2,
                     Name = "Samsung",
+                    ImageUrl= "images/brand/brand-2.jpg",
                     CreatedAt = DateTime.Now,
                 });
 
@@ -76,6 +80,7 @@ namespace BackendProject_Allup.DAL
                 {
                     Id = 3,
                     Name = "Asus",
+                    ImageUrl= "images/brand/brand-3.jpg",
                     CreatedAt = DateTime.Now,
                 });
 
@@ -84,6 +89,7 @@ namespace BackendProject_Allup.DAL
                 {
                     Id = 4,
                     Name = "Philips",
+                    ImageUrl= "images/brand/brand-4.jpg",
                     CreatedAt = DateTime.Now,
                 });
 
@@ -92,6 +98,7 @@ namespace BackendProject_Allup.DAL
                 {
                     Id = 5,
                     Name = "Sony",
+                    ImageUrl= "images/brand/brand-5.jpg",
                     CreatedAt = DateTime.Now,
                 });
 
@@ -100,6 +107,7 @@ namespace BackendProject_Allup.DAL
                 {
                     Id = 6,
                     Name = "Xiaomi",
+                    ImageUrl= "images/brand/brand-6.jpg",
                     CreatedAt = DateTime.Now,
                 });
 
@@ -108,6 +116,7 @@ namespace BackendProject_Allup.DAL
                 {
                     Id = 7,
                     Name = "Apple",
+                    ImageUrl= "images/brand/brand-3.jpg",
                     CreatedAt = DateTime.Now,
                 });
 
@@ -116,6 +125,7 @@ namespace BackendProject_Allup.DAL
                 {
                     Id = 8,
                     Name = "Gucci",
+                    ImageUrl= "images/brand/brand-4.jpg",
                     CreatedAt = DateTime.Now,
                 });
 
@@ -124,6 +134,7 @@ namespace BackendProject_Allup.DAL
                 {
                     Id = 9,
                     Name = "Pegasus",
+                    ImageUrl= "images/brand/brand-1.jpg",
                     CreatedAt = DateTime.Now,
                 });
 
@@ -132,6 +143,7 @@ namespace BackendProject_Allup.DAL
                {
                    Id = 10,
                    Name = "Logitech",
+                    ImageUrl= "images/brand/brand-5.jpg",
                    CreatedAt = DateTime.Now,
                });
 

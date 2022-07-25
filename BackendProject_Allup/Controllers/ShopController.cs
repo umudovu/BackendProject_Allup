@@ -35,5 +35,32 @@ namespace BackendProject_Allup.Controllers
 
             return View(list);
         }
+
+        public IActionResult Detail(int? id, string name)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            ShopVM shopVM = new ShopVM();
+
+            Product dbProcduct = _context.Products
+                    .Include(p => p.ProductImages)
+                    .Include(p => p.Brand)
+                    .Include(p => p.Category)
+                    .Include(p => p.TagProducts)
+                    .FirstOrDefault(p => p.Id == id);
+
+            if (dbProcduct == null) return NotFound();
+
+            shopVM.Product = dbProcduct;
+            shopVM.Categories = _context.Categories.ToList();
+            shopVM.Reviews = _context.Reviews.ToList();
+
+
+            return View(shopVM);
+
+        }
     }
 }

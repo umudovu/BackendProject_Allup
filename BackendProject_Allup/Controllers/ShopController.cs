@@ -39,18 +39,12 @@ namespace BackendProject_Allup.Controllers
             return View(list);
         }
 
-        public async Task<IActionResult> Detail(int? id, string name)
+        public async Task<IActionResult> Detail(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-
-            AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
-
-
-            ShopVM shopVM = new ShopVM();
 
             Product dbProcduct = _context.Products
                     .Include(p => p.ProductImages)
@@ -60,18 +54,17 @@ namespace BackendProject_Allup.Controllers
                     .FirstOrDefault(p => p.Id == id);
 
             if (dbProcduct == null) return NotFound();
+            ShopVM shopVM = new ShopVM();
 
             shopVM.Product = dbProcduct;
             shopVM.Categories = _context.Categories.ToList();
             shopVM.Products=_context.Products.Include(p=>p.ProductImages).ToList();
             shopVM.Brands=_context.Brands.ToList();
             shopVM.Reviews = _context.Reviews.ToList();
-            shopVM.Username = user.FullName;
             shopVM.Comments = _context.Comments.Include(c=>c.User).Where(c => c.ProductId == dbProcduct.Id).ToList();
 
 
             return View(shopVM);
-
         }
 
 

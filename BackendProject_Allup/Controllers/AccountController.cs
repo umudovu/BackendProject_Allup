@@ -1,7 +1,9 @@
-﻿using BackendProject_Allup.Models;
+﻿using BackendProject_Allup.DAL;
+using BackendProject_Allup.Models;
 using BackendProject_Allup.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using static BackendProject_Allup.Helpers.Helpers;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
@@ -13,12 +15,14 @@ namespace BackendProject_Allup.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly AppDbContext _context;
 
-        public AccountController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<AppUser> signInManager, AppDbContext context = null)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
 
@@ -56,6 +60,8 @@ namespace BackendProject_Allup.Controllers
                 }
                 return View(registerVM);
             }
+
+            
 
             await _userManager.AddToRoleAsync(appUser, UserRoles.Member.ToString());
             return RedirectToAction("login");
@@ -118,6 +124,17 @@ namespace BackendProject_Allup.Controllers
                 }
             }
 
+            Basket basket = _context.Baskets
+                   .Include(b => b.BasketItems)
+                   .FirstOrDefault(b => b.UserId == appUser.Id);
+
+
+            if (basket == null)
+            {
+                Basket b = new Basket() { UserId = appUser.Id };
+                _context.Add(b);
+                _context.SaveChanges();
+            }
 
             return RedirectToAction("index","home");
         }

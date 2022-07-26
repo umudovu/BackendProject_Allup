@@ -14,14 +14,14 @@
         public int StockCount { get; set; }
         public int CategoryId { get; set; }
         public int BrandId { get; set; }
-        public Category Category { get; set; }
-        public Brand Brand { get; set; }
+        public Category? Category { get; set; }
+        public Brand? Brand { get; set; }
 
-        public List<ProductImage> ProductImages { get; set; }
+        public List<ProductImage>? ProductImages { get; set; }
         public List<TagProduct>? TagProducts { get; set; }  
         public List<OrderItem>? OrderItems { get; set; }
         public List<BasketItem>? BasketItems { get; set; }
-        public List<Comment> Comments { get; set; }
+        public List<Comment>? Comments { get; set; }
 
 
     }

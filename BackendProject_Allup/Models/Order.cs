@@ -8,12 +8,13 @@
 
         public string? UserId { get; set; }
         public AppUser User { get; set; }
+        public List<OrderItem> OrderItems { get; set; }
     }
 
 
     public enum OrderStatus
     {
-        Pendibg,
+        Pending,
         Shipped
     }
 }

@@ -1,6 +1,7 @@
 ﻿
 @{ 
     var controllerName =ViewContext.RouteData.Values["controller"].ToString();
+    var actionName =ViewContext.RouteData.Values["Action"].ToString();
 }
 <!DOCTYPE html>
 <html>
@@ -265,28 +266,20 @@
 		<div class="menu-block customscroll">
 			<div class="sidebar-menu">
 				<ul id="accordion-menu">
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle">
-							<span class="micon dw dw-house-1"></span><span class="mtext">Home</span>
-						</a>
-						<ul class="submenu">
-							<li><a asp-controller="dashboard" asp-action="index">Dashboard style 1</a></li>
-							<li><a href="index2.html">Dashboard style 2</a></li>
-						</ul>
-					</li>
+					
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
 							<span class="micon dw dw-edit2"></span><span class="mtext">Entities</span>
 						</a>
 						<ul class="submenu">
-							<li><a asp-controller="brand" asp-action="index">Brands</a></li>
-							<li><a asp-controller="category" asp-action="index">Categories</a></li>
-							<li><a asp-controller="product" asp-action="index">Product</a></li>
-							<li><a asp-controller="productimage" asp-action="index">Product Images</a></li>
-							<li><a asp-controller="producttag" asp-action="index">Product Tags</a></li>
-							<li><a asp-controller="order" asp-action="index">Orders</a></li>
-							<li><a asp-controller="Bio" asp-action="index">Bio</a></li>
-							<li><a asp-controller="Slider" asp-action="index">Sliders</a></li>
+							<li><a asp-controller="brand" asp-action="show">Brands</a></li>
+							<li><a asp-controller="category" asp-action="show">Categories</a></li>
+							<li><a asp-controller="product" asp-action="show">Product</a></li>
+							<li><a asp-controller="productimage" asp-action="show">Product Images</a></li>
+							<li><a asp-controller="producttag" asp-action="show">Product Tags</a></li>
+							<li><a asp-controller="order" asp-action="show">Orders</a></li>
+							<li><a asp-controller="Bio" asp-action="show">Bio</a></li>
+							<li><a asp-controller="Slider" asp-action="show">Sliders</a></li>
 							
 						</ul>
 					</li>
@@ -463,10 +456,33 @@
 										<h4>Brands</h4>
 									</div>
 									<nav aria-label="breadcrumb" role="navigation">
-										<ol class="breadcrumb">
+										<ol class="breadcrumb d-flex align-items-center">
 											<li class="breadcrumb-item"><a asp-controller="dashboard" asp-action="index">Home</a></li>
 											<li class="breadcrumb-item active" aria-current="page">@controllerName</li>
-										</ol>
+											@if(actionName=="Show"){
+												<li class="mx-5 " aria-current="page">
+
+												<a asp-action="create" class="btn btn-outline-primary">New @controllerName creat</a>
+
+									</li>
+								}
+								else if (controllerName == "Dashboard")
+								{
+									<li class="mx-5 " aria-current="page">
+
+											
+
+									</li>
+								}
+								else
+								{
+									<li class="mx-5 " aria-current="page">
+
+												<a asp-action="show" class="btn btn-outline-dark">Go to @(controllerName+"s")</a>
+
+									</li>
+								}
+							</ol>
 									</nav>
 								</div>
 								
@@ -485,7 +501,9 @@
 	<script src="~/Admin/src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
 	<script src="~/Admin/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
 	<script src="~/Admin/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
-	<script src="~/Admin/vendors/scripts/dashboard.js"></script>
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <!-- Asp Jquery Validation cdn-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
 
 	@RenderSection("scripts", required: false)
 </body>

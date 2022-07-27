@@ -1,14 +1,13 @@
-﻿@model List<Brand>
+﻿@model PagedList<Category>
 @{
 	ViewData["Title"] = "Index";
 	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
-	int count = 0;
+	int count = (Model.CurrentPage-1)*Model.PageSize;
 }
 
 	<div class="main-container">
 		<div class="pd-ltr-20 xs-pd-20-10">
 			<div class="min-height-200px">
-				
 						<!-- Simple Datatable start -->
 				<div class="card-box mb-30">
 						
@@ -19,6 +18,7 @@
 											<th class="col-1" >Number</th>
 											<th class="datatable-nosort">Image</th>
 											<th>Name</th>
+											<th>Parent Name</th>
 											<th>Creat Date</th>
 											<th class="datatable-nosort">Action</th>
 										</tr>
@@ -27,11 +27,19 @@
 										@foreach (var item in Model)
 							{
 								count++;
-
+								string parent = "";
+									foreach (var a in ViewBag.Parents)
+								{
+									if (a.Id==item.ParentId)
+									{
+										parent = a.Name;
+									}
+								}
 											<tr>
 											<td class="table-plus">@count</td>
 											<td><img width="100"  src="~/assets/@item.ImageUrl" /></td>
 											<td>@item.Name</td>
+											<td>@(item.ParentId==null?"":parent)</td>
 											<td>@item.CreatedAt</td>
 											<td>
 												<div class="dropdown">
@@ -39,9 +47,9 @@
 														<i class="dw dw-more"></i>
 													</a>
 													<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-														<a class="dropdown-item" asp-action="detail"><i class="dw dw-eye"></i> View</a>
-														<a class="dropdown-item" asp-action="update"><i class="dw dw-edit2"></i> Edit</a>
-														<a class="dropdown-item" asp-action="remove"><i class="dw dw-delete-3"></i> Delete</a>
+														<a class="dropdown-item" asp-action="detail" asp-route-id="@item.Id"><i class="dw dw-eye"></i> View</a>
+														<a class="dropdown-item" asp-action="update" asp-route-id="@item.Id"><i class="dw dw-edit2"></i> Edit</a>
+														<a class="dropdown-item" asp-action="remove" asp-route-id="@item.Id"><i class="dw dw-delete-3"></i> Delete</a>
 													</div>
 												</div>
 											</td>
@@ -53,7 +61,21 @@
 				</div>
 						<!-- Simple Datatable End -->
 
-
+					<div class="row justify-content-center mb-5">
+						<div class="btn-toolbar mb-15" role="toolbar" aria-label="Toolbar with button groups">
+						<div class="btn-group mr-2" role="group" aria-label="First group">
+							<a type="button" asp-route-page="@(Model.CurrentPage-1)" class="btn btn-outline-primary @(Model.CurrentPage == 1 ? "disabled" : "")">Prewious</a>
+							
+                        @for (var i = 1; i <= @Model.TotalPage; i++)
+                        {
+                           
+							<a type="button" asp-route-page="@i" class="btn btn-outline-primary @(Model.CurrentPage==i?"disabled":"")">@i</a>
+                        }
+							<a type="button" asp-route-page="@(Model.CurrentPage+1)" class="btn btn-outline-primary @(Model.CurrentPage==Model.TotalPage?"disabled":"")">Next</a>
+									
+						</div>
+					</div>
+					</div>
 			</div>
 		</div>			
 	</div>

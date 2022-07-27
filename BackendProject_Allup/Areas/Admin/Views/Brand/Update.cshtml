@@ -1,0 +1,36 @@
+﻿@model BrandVM
+
+
+
+				<!-- Default Basic Forms Start -->
+				<div class="main-container d-flex justify-content-center">
+				<div class="pd-20 card-box mb-30 col-7">
+					<div class="clearfix">
+						<div class="pull-left">
+							<h4 class="text-blue h4">Your new brand</h4>
+						</div>
+					</div>
+					<form  method="post" enctype="multipart/form-data" >
+						<input type="hidden" name="Id" value="@Model.Id" >
+						<span asp-validation-for="Name" class="text-danger"></span>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Brand Name</label>
+							<div class="col-sm-12 col-md-10">
+								<input asp-for="Name" class="form-control"  placeholder="Brand name">
+							</div>
+						</div>
+
+						<span asp-validation-for="Photo" class="text-danger"></span>
+						<div class="form-group row">
+							<label class="col-sm-12 col-md-2 col-form-label">Brand Image</label>
+							<div class="col-sm-12 col-md-10">
+								<input asp-for="Photo" class="form-control"  >
+							</div>
+						</div>
+
+						<button type="submit" class="btn btn-success">Save Changes</button>
+					</form>
+					
+				</div>
+				</div>
+				<!-- Default Basic Forms End -->

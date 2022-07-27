@@ -20,12 +20,12 @@
                                                 <div class="single-cart-item d-flex">
                                                     <div class="cart-item-thumb">
                                                         <a href="single-product.html"><img src="~/assets/@item.ImgUrl" alt="product"></a>
-                                                        <span class="product-quantity">@item.Count</span>
+                                                        <span class="product-quantity">@item.BasketCount</span>
                                                     </div>
                                                     <div class="cart-item-content media-body">
                                                         <h5 class="product-name"><a asp-controller="product" asp-action="detail">@item.Name</a></h5>
                                                         <span class="product-price">€@item.Price</span>
-                                                        <a asp-controller="basket" asp-action="remove" asp-route-id="@item.Id" class="product-close"><i class="fal fa-times"></i></a>
+                                                        <a asp-controller="dbbasket" asp-action="remove" asp-route-id="@item.Id" class="product-close"><i class="fal fa-times"></i></a>
                                                     </div>
                                                 </div>
                                             </li>

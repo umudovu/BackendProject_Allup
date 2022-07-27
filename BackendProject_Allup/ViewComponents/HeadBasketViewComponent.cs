@@ -1,58 +1,58 @@
 ﻿using BackendProject_Allup.DAL;
+using BackendProject_Allup.Extentions;
 using BackendProject_Allup.Models;
 using BackendProject_Allup.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace BackendProject_Allup.ViewComponents
 {
     public class HeadBasketViewComponent:ViewComponent
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public HeadBasketViewComponent(AppDbContext context)    
+        public HeadBasketViewComponent(AppDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            string basket = Request.Cookies["basket"];
+            List<BasketVM> products= new List<BasketVM>();
+            var currentUserId = _userManager.GetUserId(Request.HttpContext.User);
 
-            List<BasketVM> products;
 
-            if (basket != null)
+            Basket basket = _context.Baskets
+                    .Include(b => b.BasketItems)
+                    .FirstOrDefault(b => b.UserId == currentUserId);
+
+            List<BasketItem> basketItems = _context.BasketItems.ToList();
+            foreach (var item in basketItems)
             {
-                products = JsonConvert.DeserializeObject<List<BasketVM>>(basket);
+                Product product = _context.Products.Include(p => p.ProductImages).FirstOrDefault(p => p.Id == item.ProductId);
 
-                foreach (var item in products)
+                BasketVM basketVM = new BasketVM
                 {
-                    Product product = _context.Products.Include(p=>p.ProductImages).FirstOrDefault(p => p.Id == item.Id);
-                    item.Price = product.Price;
-                    item.Name = product.Name;
-                    item.ImgUrl = product.ProductImages.Find(p => p.IsMain==true).ImageUrl;
-                }
+                    Id = item.ProductId,
+                    Price = product.Price,
+                    Name = product.Name,
+                    BasketCount = item.Count,
+                    SubTotal = product.Price * item.Count,
+                    ImgUrl = product.ProductImages.Find(p => p.IsMain == true).ImageUrl,
+                    
+                };
+                products.Add(basketVM);
 
             }
-            else
-            {
-                products = new List<BasketVM>();
-            }
 
-            double total = 0;
 
-            if (products.Count > 0)
-            {
-                foreach (BasketVM pr in products)
-                {
-                    total += pr.Price * pr.Count;
-                    pr.SubTotal += pr.Price * pr.Count;
-                    pr.BasketCount += pr.Count;
-                }
-            }
-            ViewBag.Total = total;
+            ViewBag.Total = BasketServiceExtentions.BasketCalculate(products);
 
             return View(await Task.FromResult(products));
         }

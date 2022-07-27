@@ -19,9 +19,7 @@ namespace BackendProject_Allup.Extentions
             {
                 foreach (var pr in products)
                 {
-                    total += pr.Price * pr.Count;
-                    pr.SubTotal += pr.Price * pr.Count;
-                    pr.BasketCount += pr.Count;
+                    total += pr.Price * pr.BasketCount;
                 }
             }
             return total;

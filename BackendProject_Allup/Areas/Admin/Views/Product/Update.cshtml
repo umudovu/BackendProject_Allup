@@ -1,4 +1,5 @@
-﻿@model ProductVM
+﻿@using Microsoft.AspNetCore.Http
+@model ProductVM
 
 
 
@@ -100,16 +101,34 @@
 							</div>
 						</div>
 
-						<button type="submit" class="btn btn-success">Create</button>
+						
+						<button type="submit" class="btn btn-success">Save Changes</button>
 					</form>
-					
+					<div class="gallery-wrap my-5">
+							<ul class="row">
+								@foreach (var item in Model.Images)
+								{
+									<li class="col-lg-4 col-md-6 col-sm-12">
+										<div style="position:relative" class="da-card box-shadow">
+											<div class="row justify-content-between">
+												@if (item.IsMain==true)
+											{
+													<a  class="btn btn-success">This Main Photo</a>
+											}
+											else{
+															<a asp-action="RemoveImage" asp-route-imageid="@item.Id" asp-route-productid="@Model.Id" asp-route-Returnurl="@Context.Request.Path" class="btn btn-danger">Remove</a>
+															<a asp-action="MainImage" asp-route-imageid="@item.Id" asp-route-productid="@Model.Id" asp-route-Returnurl="@Context.Request.Path" class="btn btn-info">Main Photo</a>
+											}
+											</div>
+											
+											<div  class="da-card-photo">
+												<img src="~/assets/@item.ImageUrl" alt="">
+											</div>
+										</div>
+									</li>
+								}
+							</ul>
+						</div>
 				</div>
 				</div>
 				<!-- Default Basic Forms End -->
-
-							@section Scripts{
-				 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-				 <!-- Asp Jquery Validation cdn-->
-				 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
-
-				}

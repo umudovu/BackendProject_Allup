@@ -1,4 +1,6 @@
-﻿namespace BackendProject_Allup.Areas.Admin.ViewModels
+﻿using BackendProject_Allup.Models;
+
+namespace BackendProject_Allup.Areas.Admin.ViewModels
 {
     public class ProductVM
     {
@@ -14,6 +16,7 @@
         public int StockCount { get; set; }
         public int CategoryId { get; set; }
         public int BrandId { get; set; }
+        public List<ProductImage> Images { get; set; }
         public List<IFormFile> Photos { get; set; }
     }
 }

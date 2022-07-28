@@ -33,7 +33,7 @@
 								count++;
 											<tr>
 											<td class="table-plus">@count</td>
-											<td><img height="50"  src="~/assets/@item.ProductImages.FirstOrDefault(x=>x.IsMain).ImageUrl" /></td>
+											<td><img height="50"  src="~/assets/@item.ProductImages.FirstOrDefault(x=>x.IsMain==true).ImageUrl" /></td>
 											<td>@item.Name</td>
 											<td>$@item.Price</td>
 											<td>$@item.DiscountPrice</td>

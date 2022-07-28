@@ -61,11 +61,6 @@ namespace BackendProject_Allup.Areas.Admin.Controllers
 				return View();
 			}
 
-			if (_context.Categories.Any(x => x.Name.ToLower() == category.Name.ToLower()))
-			{
-				ModelState.AddModelError("Name", "Eyni ad is exsist");
-				return View();
-			}
 
 			if (_context.Categories.Any(c => c.Name.ToLower() == category.Name.ToLower()))
 			{
@@ -111,7 +106,7 @@ namespace BackendProject_Allup.Areas.Admin.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Update(CategoryVM category)
+		public async Task<IActionResult> Update(CategoryVM category,string ReturnUrl)
 		{
 			Category dbCategory = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
 			if (dbCategory == null) return NotFound();
@@ -150,11 +145,11 @@ namespace BackendProject_Allup.Areas.Admin.Controllers
 			dbCategory.UpdatedAt = DateTime.Now;
 
 			await _context.SaveChangesAsync();
-			return RedirectToAction("show");
+			return Redirect(ReturnUrl);
 		}
 
 
-		public async Task<IActionResult> Remove(int? id)
+		public async Task<IActionResult> Remove(int? id,string ReturnUrl)
 		{
 			if (id == null) return NotFound();
 
@@ -171,7 +166,7 @@ namespace BackendProject_Allup.Areas.Admin.Controllers
 			await _context.SaveChangesAsync();
 
 
-			return RedirectToAction("show");
+			return Redirect(ReturnUrl);
 		}
 	}
 }

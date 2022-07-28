@@ -453,7 +453,7 @@
 							<div class="row">
 								<div class="col-md-6 col-sm-12">
 									<div class="title">
-										<h4>Brands</h4>
+										<h4> @(controllerName+"s")</h4>
 									</div>
 									<nav aria-label="breadcrumb" role="navigation">
 										<ol class="breadcrumb d-flex align-items-center">
@@ -462,7 +462,7 @@
 											@if(actionName=="Show"){
 												<li class="mx-5 " aria-current="page">
 
-												<a asp-action="create" class="btn btn-outline-primary">New @controllerName creat</a>
+												<a asp-action="create" asp-route-Returnurl="@Context.Request.Path"class="btn btn-outline-primary">New @controllerName create</a>
 
 									</li>
 								}

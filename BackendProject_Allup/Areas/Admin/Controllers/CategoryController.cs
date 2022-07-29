@@ -111,7 +111,7 @@ namespace BackendProject_Allup.Areas.Admin.Controllers
 			Category dbCategory = await _context.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
 			if (dbCategory == null) return NotFound();
 
-			if (ModelState["Photo"] != null)
+			if (category.Photo != null)
 			{
 				if (!category.Photo.IsImage())
 				{

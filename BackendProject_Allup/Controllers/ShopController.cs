@@ -1,4 +1,4 @@
-﻿using BackendProject_Allup.DAL;
+﻿ using BackendProject_Allup.DAL;
 using BackendProject_Allup.Helpers;
 using BackendProject_Allup.Models;
 using BackendProject_Allup.ViewModels;
@@ -21,22 +21,61 @@ namespace BackendProject_Allup.Controllers
         }
 
 
-        public async Task<IActionResult> Index(int page = 1, int pageSize = 6)
+        public async Task<IActionResult> Index(List<Product>? product,int? id, int page = 1, int pageSize = 6)
         {
-            ShopVM shopVM = new ShopVM()
+
+            ShopVM shopVM = new ShopVM();
+            if (product != null)
             {
-                Categories = _context.Categories.ToList(),
-                Products = _context.Products
+                shopVM.Products = _context.Products
+                   .Include(p => p.ProductImages)
+                   .Include(p => p.Brand)
+                   .Include(p => p.Category)
+                   .ToList();
+            }
+
+            if (id != null)
+            {
+                shopVM.Products = _context.Products
+                    .Where(x=>x.CategoryId==id)
                     .Include(p => p.ProductImages)
                     .Include(p => p.Brand)
                     .Include(p => p.Category)
-                    .ToList()
-            };
+                    .ToList();
+            }
+            else
+            {
+                shopVM.Products = _context.Products
+                    .Include(p => p.ProductImages)
+                    .Include(p => p.Brand)
+                    .Include(p => p.Category)
+                    .ToList();
+            }
+            ViewBag.ParentCategories = _context.Categories.Where(x=>x.ParentId==null).ToList();
+            ViewBag.ChildrenCategories = _context.Categories.Where(x=>x.ParentId!=null).ToList();
 
             var list = await PagedList<Product>.CreateAsync(shopVM.Products, page, pageSize);
 
-
             return View(list);
+        }
+        
+        public async Task<IActionResult> SortByCategoryName(int? categoryid)
+        {
+            if (categoryid == null) return NotFound();
+            var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == categoryid);
+
+            return RedirectToAction("index", new {id=category.Id});
+        }
+        public async Task<IActionResult> SortByPrice(int minrange,int maxrange)
+        {
+
+            var sproduct = _context.Products
+                   .Where(x => x.Price > minrange && x.Price < maxrange).Include(p => p.ProductImages)
+                   .Include(p => p.Brand)
+                   .Include(p => p.Category)
+                   .ToList(); ;
+
+            return RedirectToAction("index", new { product = sproduct });
         }
 
         public async Task<IActionResult> Detail(int? id)

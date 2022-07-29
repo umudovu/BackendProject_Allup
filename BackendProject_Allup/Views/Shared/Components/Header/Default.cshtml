@@ -129,7 +129,7 @@
                             {
                                 if (item.ParentId == null)
                                 {
-                                    <li class="menu-item"><a href="#"><span>@item.Name</span></a></li>
+                                    <li class="menu-item"><a asp-controller="shop" asp-action="SortByCategoryName" asp-route-categoryid="@item.Id"><span>@item.Name</span></a></li>
                                 }
                                 else
                                 {
@@ -139,7 +139,7 @@
                                             <li>
                                                 <ul class="submenu-item ">
                                                     
-                                                        <li><a href="shop-left-sidebar.html">@item.Name</a></li>
+                                                        <li><a asp-controller="shop" asp-action="SortByCategoryName" asp-route-categoryid="@item.Id">@item.Name</a></li>
                                                    
                                                 </ul>
                                             </li>

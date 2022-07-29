@@ -2,9 +2,9 @@
 
 
    <div class="header-cart">
-                                    <div class="cart-btn">
-                                        <a asp-controller="dbbasket" asp-action="index">
-                                            <i class="icon ion-bag"></i>
+                                    <div class="cart-btn border-0 d-flex justify-content-center">
+                                        <a class="d-flex align-items-center " asp-controller="order" asp-action="checkout">
+                                            <i class="fa-solid fa-receipt"></i>
                                             <span class="count">@Model.Count</span>
                                         </a>
                                     </div>
@@ -42,3 +42,5 @@
                                     <!-- mini cart -->
                             
                 </div>
+
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />

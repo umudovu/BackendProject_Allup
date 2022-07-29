@@ -1,0 +1,44 @@
+﻿@model List<Order>
+
+
+   <div class="header-cart">
+                                    <div class="cart-btn">
+                                        <a asp-controller="dbbasket" asp-action="index">
+                                            <i class="icon ion-bag"></i>
+                                            <span class="count">@Model.Count</span>
+                                        </a>
+                                    </div>
+                                @if(User.Identity.IsAuthenticated){
+                                    <div class="mini-cart">
+                                        <ul class="cart-items">
+                                             @foreach (var item in Model)
+                                             {
+                                                  @if(item.OrderStatus!=OrderStatus.Completed){
+                                                      <li>
+                                                        <div class="single-cart-item d-flex">
+                                                            <div class="cart-item-content media-body">
+                                                                <h5 class="product-name"><a asp-controller="order" asp-action="orderdetail" asp-route-id="@item.Id"> @item.FirstName @item.Surname</a></h5>
+                                                                <h5 class="product-name"><a asp-controller="order" asp-action="orderdetail" asp-route-id="@item.Id">@item.CreatedAt </a></h5>
+                                                                <h5 class="product-name"><a asp-controller="order" asp-action="orderdetail" asp-route-id="@item.Id">@item.PaymantMethod </a></h5>
+                                                                <h5 class="product-name"><a asp-controller="order" asp-action="orderdetail" asp-route-id="@item.Id">@item.OrderStatus </a></h5>
+                                                            </div>
+                                                        </div>
+                                                     </li>
+                                                  }
+                                             }
+                                            
+
+                                           
+                                        <div class="checkout text-center">
+                                            <a asp-controller="myaccount" asp-action="index"  class="main-btn">Go to</a>
+                                        </div>
+                                        </ul>
+                                        
+                                    </div>
+                                } 
+                                    
+                                    
+                                    
+                                    <!-- mini cart -->
+                            
+                </div>

@@ -35,6 +35,7 @@
                                        <li><a href="#">@if(@Model.Username!=""){<a class="nav-link" href="#">@Model.Username</a>}
                                                   else{<a class="nav-link" href="#">Username</a>}
                                             </a></li>
+                                            <li><a asp-controller="myaccount" asp-action="index">My Account</a></li>
                                             <li><a asp-controller="account" asp-action="register">Register</a></li>
                                             <li><a asp-controller="account" asp-action="login">Sign in</a></li>
                                             <li><a asp-controller="account" asp-action="logout">Logout</a></li>
@@ -106,7 +107,7 @@
                                 </div>
 
                               @*  header cart*@
-
+                               @await Component.InvokeAsync("HeaderOrder")
                               @await Component.InvokeAsync("HeadBasket")
                             </div> <!-- header search cart -->
                         </div>

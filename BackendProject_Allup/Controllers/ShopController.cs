@@ -14,7 +14,7 @@ namespace BackendProject_Allup.Controllers
         private readonly AppDbContext _context;
         private readonly UserManager<AppUser> _userManager;
 
-        public ShopController(AppDbContext context, Microsoft.AspNetCore.Identity.UserManager<AppUser> userManager = null)
+        public ShopController(AppDbContext context,UserManager<AppUser> userManager )
         {
             _context = context;
             _userManager = userManager;

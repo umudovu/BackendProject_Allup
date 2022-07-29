@@ -22,6 +22,23 @@ namespace BackendProject_Allup.Areas.Admin.Controllers
         public async Task<IActionResult> Show(int page = 1, int pageSize = 10)
         {
             List<Product> products = await _context.Products
+                .Where(x=>x.IsDeleted==false)
+                .Include(x => x.ProductImages)
+                .Include(x => x.Brand)
+                .Include(x => x.TagProducts)
+                .Include(x => x.Category)
+                .ToListAsync();
+
+
+            var list = await PagedList<Product>.CreateAsync(products, page, pageSize);
+
+            return View(list);
+        }
+
+        public async Task<IActionResult> DeletedList(int page = 1, int pageSize = 10)
+        {
+            List<Product> products = await _context.Products
+                .Where(x => x.IsDeleted)
                 .Include(x => x.ProductImages)
                 .Include(x => x.Brand)
                 .Include(x => x.TagProducts)
@@ -250,6 +267,31 @@ namespace BackendProject_Allup.Areas.Admin.Controllers
 
             if (dbProduct == null) return NotFound();
 
+            //foreach (var photo in dbProduct.ProductImages)
+            //{
+            //    string path = Path.Combine(_env.WebRootPath, @"assets\images\product", photo.ImageUrl);
+            //    Helpers.Helpers.DeleteImage(path);
+
+            //    _context.ProductImages.Remove(photo);
+            //}
+            dbProduct.IsDeleted = true;
+
+
+            await _context.SaveChangesAsync();
+
+
+            if (Returnurl != null) return Redirect(Returnurl);
+            return RedirectToAction("show");
+        }
+
+        public async Task<IActionResult> RemoveAll(int? id, string Returnurl)
+        {
+            Product dbProduct = await _context.Products
+                .Include(x => x.ProductImages)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (dbProduct == null) return NotFound();
+
             foreach (var photo in dbProduct.ProductImages)
             {
                 string path = Path.Combine(_env.WebRootPath, @"assets\images\product", photo.ImageUrl);
@@ -259,6 +301,24 @@ namespace BackendProject_Allup.Areas.Admin.Controllers
             }
 
             _context.Products.Remove(dbProduct);
+            await _context.SaveChangesAsync();
+
+
+            if (Returnurl != null) return Redirect(Returnurl);
+            return RedirectToAction("show");
+        }
+
+        public async Task<IActionResult> Return(int? id, string Returnurl)
+        {
+            Product dbProduct = await _context.Products
+                .Include(x => x.ProductImages)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (dbProduct == null) return NotFound();
+
+            
+            dbProduct.IsDeleted = false;
+
 
             await _context.SaveChangesAsync();
 

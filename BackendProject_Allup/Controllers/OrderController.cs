@@ -44,6 +44,8 @@ namespace BackendProject_Allup.Controllers
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = User.FindFirst(ClaimTypes.Name)?.Value;
+
 
             Order newOrder = new Order();
 
@@ -68,6 +70,7 @@ namespace BackendProject_Allup.Controllers
             newOrder.PaymantMethod = radio;
 
 
+
             _context.Orders.Add(newOrder);
             _context.SaveChanges();
 
@@ -86,6 +89,7 @@ namespace BackendProject_Allup.Controllers
                 _context.OrderItems.Add(newOrderitem);
                 _context.BasketItems.Remove(item);
             }
+
 
 
             _context.SaveChanges();

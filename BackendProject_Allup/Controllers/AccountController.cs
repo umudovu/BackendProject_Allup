@@ -1,12 +1,15 @@
 ﻿using BackendProject_Allup.DAL;
+using BackendProject_Allup.Helpers;
 using BackendProject_Allup.Models;
 using BackendProject_Allup.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SelectPdf;
 using System.Security.Claims;
 using static BackendProject_Allup.Helpers.Helpers;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
+
 
 namespace BackendProject_Allup.Controllers
 {
@@ -16,13 +19,17 @@ namespace BackendProject_Allup.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly AppDbContext _context;
-
-        public AccountController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<AppUser> signInManager, AppDbContext context = null)
+        private readonly IConfiguration _config;
+        public AccountController(UserManager<AppUser> userManager, 
+            RoleManager<IdentityRole> roleManager, 
+            SignInManager<AppUser> signInManager,
+            AppDbContext context , IConfiguration config)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
             _context = context;
+            _config = config;
         }
 
 
@@ -61,7 +68,14 @@ namespace BackendProject_Allup.Controllers
                 return View(registerVM);
             }
 
-            
+            var patch = @"C:\Users\umudo\Desktop\Asp.net\BackendProject_Allup\BackendProject_Allup\Views\Order\mail.cshtml";
+
+            var html= System.IO.File.ReadAllText(patch);
+
+            //EmailService emailService = new EmailService(_config.GetSection("ConfirmationParams:Email").Value, _config.GetSection("ConfirmationParams:Password").Value);
+            //emailService.SendEmail(registerVM.Email,"Register",html);
+
+
 
             await _userManager.AddToRoleAsync(appUser, UserRoles.Member.ToString());
             return RedirectToAction("login");
@@ -157,7 +171,11 @@ namespace BackendProject_Allup.Controllers
                     await _roleManager.CreateAsync(new IdentityRole { Name = item.ToString() });
                 }
             };
+
+
+           
         }
+
 
 
         //public async Task<ActionResult> CreateUserFake()
@@ -180,5 +198,31 @@ namespace BackendProject_Allup.Controllers
 
         //    return RedirectToAction("Index", "Home");
         //}
+
+
+        public  byte[]  Convertpdt()
+        {
+            var mobileView = new HtmlToPdf();
+            
+            var fullView = new HtmlToPdf();
+            fullView.Options.WebPageWidth = 1920;
+                
+            var pdf = fullView.ConvertUrl("https://localhost:44330/shop/index");
+            
+            var pdfBytes = pdf.Save();
+
+            //using (var streamWriter = new StreamWriter(@"C:\Users\umudo\Desktop\Asp.net\BackendProject_Allup\BackendProject_Allup\wwwroot\Pdfs\pdf.pdf"))
+            //{
+            //    await streamWriter.BaseStream.WriteAsync(pdfBytes, 0, pdfBytes.Length);
+            //}
+
+
+            EmailService emailService = new EmailService(_config.GetSection("ConfirmationParams:Email").Value, _config.GetSection("ConfirmationParams:Password").Value);
+            emailService.SendEmail("umudau@code.edu.az","mail", "Sehife", "Register", pdfBytes);
+
+            return pdfBytes;
+
+
+        }
     }
 }

@@ -54,7 +54,7 @@ namespace BackendProject_Allup.Areas.Admin.Controllers
         public async Task<IActionResult> Create()
         {
 
-            ProductVM productVM = new ProductVM();
+            ProductVM productVM = new ();
             ViewBag.Categories = new SelectList(_context.Categories.Where(x => x.ParentId != null).ToList(), "Id", "Name");
             ViewBag.Brands = new SelectList(_context.Brands.ToList(), "Id", "Name");
 

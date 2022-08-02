@@ -13,7 +13,7 @@ namespace BackendProject_Allup.Areas.Admin.Controllers
         private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _env;
 
-        public BrandController(AppDbContext context, IWebHostEnvironment env = null)
+        public BrandController(AppDbContext context, IWebHostEnvironment env)
         {
             _context = context;
             _env = env;

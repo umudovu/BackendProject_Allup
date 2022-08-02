@@ -1,0 +1,156 @@
+﻿@model Order
+
+@{
+    Layout = null;
+    int count = 0;
+}
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+
+
+<!-- Mirrored from demo.hasthemes.com/allup/allup/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 04 Sep 2020 10:46:32 GMT -->
+<head>
+    <meta charset="utf-8">
+
+    <!--====== Title ======-->
+    <title>Allup - Electronics Responsive eCommerce HTML Template.</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--====== Favicon Icon ======-->
+    <link rel="shortcut icon" href="~/assets/images/favicon.png" type="image/png">
+
+
+    <!-- CSS
+    ============================================ -->
+    <!--===== Vendor CSS (Bootstrap & Icon Font) =====-->
+
+    <link rel="stylesheet" href="~/assets/css/plugins/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/css/plugins/ionicons.min.css">
+    <link rel="stylesheet" href="~/assets/css/plugins/fontawesome.min.css">
+
+    <!--===== Plugins CSS (All Plugins Files) =====-->
+
+    <link rel="stylesheet" href="~/assets/css/plugins/slick.css">
+    <link rel="stylesheet" href="~/assets/css/plugins/animate.css">
+    <link rel="stylesheet" href="~/assets/css/plugins/jquery-ui.min.css">
+    <link rel="stylesheet" href="~/assets/css/plugins/default.css">
+
+    <!--====== Main Style CSS ======-->
+    <link rel="stylesheet" href="~/assets/css/style.css">
+
+
+    <!--====== Use the minified version files listed below for better performance and remove the files listed above ======-->
+    <!-- <link rel="stylesheet" href="~/assets/css/vendor/plugins.min.css">
+    <link rel="stylesheet" href="~/assets/css/style.min.css"> -->
+
+</head>
+<body>
+    <main style="margin-top:50px;" role="main" class="main-content">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-10 col-xl-8">
+                    <div class="row align-items-center mb-4">
+                        <div class="col">
+                            <h2 class="h5 page-title"><small class="text-muted text-uppercase">Invoice</small><br />#@Model.InvoiceNo</h2>
+                        </div>
+                        <div class="col-auto">
+                            <a href="https://localhost:44330/home/index" class="btn btn-secondary">Go to Shopping</a>
+                        </div>
+                    </div>
+                    <div class="card shadow">
+                        <div class="card-body p-5">
+                            <div class="row mb-5">
+                                <div class="col-12 text-center mb-4">
+                                    <h3 style="color:dodgerblue;">U.U</h3>
+                                    <h2 class="mb-0 text-uppercase">Invoice</h2>
+                                    <p class="text-muted">Baku<br />Azerbaijan Ismailly R.Bashirov st.</p>
+                                </div>
+                                <div class="col-md-7">
+                                    <p class="small text-muted text-uppercase mb-2">Invoice from</p>
+                                    <p class="mb-4">
+                                        <strong>Umud Umudov</strong><br />CEO<br /> Azerbaijan Ismailly R.Bashirov st.<br />(079) 548-48-25<br />
+                                    </p>
+                                    <p>
+                                        <span class="small text-muted text-uppercase">Invoice #</span><br />
+                                        <strong>@Model.InvoiceNo</strong>
+                                    </p>
+                                </div>
+                                <div class="col-md-5">
+                                    <p class="small text-muted text-uppercase mb-2">Invoice to</p>
+                                    <p class="mb-4">
+                                        <strong>@Model.User.FullName</strong><br /> @Model.Address / @Model.City <br />@Model.Country<br /> @Model.Phone<br />
+                                    </p>
+                                    <p>
+                                        <small class="small text-muted text-uppercase">Invoice date</small><br />
+                                        <strong>@String.Format("{0:dd MMM yyyy HH:mm}", Model.CreatedAt).ToString()</strong>
+                                    </p>
+                                </div>
+                            </div>
+                            <table class="table table-borderless table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col" class="text-right">Rate</th>
+                                        <th scope="col" class="text-right">Hours</th>
+                                        <th scope="col" class="text-right">Ammout</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.OrderItems)
+                                    {
+                                        count++;
+                                        <tr>
+                                            <th scope="row">@count</th>
+                                            <td>
+                                                @item.Product.Name<br />
+                                            </td>
+                                            <td class="text-right">$@item.Price</td>
+                                            <td class="text-right">@item.Count</td>
+                                            <td class="text-right">$@String.Format("{0:0.00}", (item.Price * item.Count))</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <div class="row mt-5">
+                                <div class="col-2 text-center">
+                                    <img width="150" src="~/assets/images/QR_code.jpg" class="navbar-brand-img brand-sm mx-auto my-4" alt="...">
+                                </div>
+                                <div class="col-md-5">
+                                    <p class="text-muted small">
+                                        <strong>Note :</strong>Thank your to choose us <br />Best Regards, Umudov Umud - CEO
+                                    </p>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="text-right mr-2">
+                                        <p class="mb-2 h6">
+                                            <span class="text-muted">Subtotal : </span>
+                                            <strong>$@String.Format("{0:0.00}", (Model.TotalPrice))</strong>
+                                        </p>
+                                        <p class="mb-2 h6">
+                                            <span class="text-muted">Shipping( + EDV) (10%) : </span>
+                                            <strong>$@String.Format("{0:0.00}", (Model.TotalPrice * 0.1))</strong>
+                                        </p>
+                                        <p class="mb-2 h6">
+                                            <span class="text-muted">Total : </span>
+                                            <span>$@String.Format("{0:0.00}", (Model.TotalPrice * 1.1))</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+
+<!-- Mirrored from demo.hasthemes.com/allup/allup/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 04 Sep 2020 10:47:16 GMT -->
+</html>

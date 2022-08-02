@@ -1,0 +1,103 @@
+﻿@model PagedList<Order>
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+	int count = (Model.CurrentPage-1)*Model.PageSize;
+}
+
+	<div class="main-container">
+		<div class="pd-ltr-20 xs-pd-20-10">
+			<div class="min-height-200px">
+						<!-- Simple Datatable start -->
+				<div class="card-box mb-30">
+						
+					<div class="pb-20 pt-20">
+								<table class="data-table table stripe hover nowrap container">
+									<thead>
+										<tr>
+													<th>ID</th>
+                                                    <th>Purchase Date</th>
+                                                    <th>Customer</th>
+                                                    <th>Phone</th>
+                                                    <th>Ship Adress</th>
+                                                    <th>Location</th>
+                                                    <th>Total</th>
+                                                    <th>Payment</th>
+                                                    <th>Status</th>
+                                                    <th>Tracking No</th>
+                                                    <th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var item in Model)
+							{
+								count++;
+
+											<tr>
+											<td>@item.Id</td>
+                                                    <td>@item.CreatedAt.Value.Date.ToLongDateString()</td>
+                                                    <td>@item.FirstName @item.Surname</td>
+                                                    <td>@item.Phone</td>
+                                                    <td>@item.Address</td>
+                                                    <td>@item.Country / @item.City</td>
+                                                    <td>@item.TotalPrice</td>
+                                                    <td>@item.PaymantMethod</td>
+                                                    @switch (item.OrderStatus)
+                                                    {
+                                                        case OrderStatus.Processing:
+                                                            <td style="height:20px;width:10px;"><span class="badge badge-primary">Processing</span></td>
+                                                            break;
+                                                        case OrderStatus.Shipped:
+                                                            <td style="height:20px;width:10px;"><span class="badge badge-info">Shipped</span></td>
+                                                            break;
+                                                        case OrderStatus.Completed:
+                                                            <td style="height:20px;width:10px;"><span class="badge badge-success">Completed</span></td>
+                                                            break;
+                                                        case OrderStatus.Closed:
+                                                            <td style="height:20px;width:10px;"><span class="badge badge-warning">Closed</span></td>
+                                                            break;
+                                                        case OrderStatus.Canceled:
+                                                            <td style="height:20px;width:10px;"><span class="badge badge-danger">Canceled</span></td>
+                                                            break;
+                                                        default:
+                                                            break;
+                                                    }
+											
+													<td>@item.TrackingNo</td>
+													
+													<td>
+												<div class="dropdown">
+													<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+														<i class="dw dw-more"></i>
+													</a>
+													<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+														<div class="d-flex" style="flex-direction: column;">
+															<a  class="btn btn-primary  mb-1" asp-action="statuscontrol" asp-route-status="@OrderStatus.Processing" asp-route-Returnurl="@Context.Request.Path" asp-route-id="@item.Id">Processing</a>
+															<a  class="btn btn-secondary mb-1" asp-action="statuscontrol" asp-route-status="@OrderStatus.Shipped" asp-route-Returnurl="@Context.Request.Path" asp-route-id="@item.Id">Shipped</a>
+															<a  class="btn btn-success mb-1" asp-action="statuscontrol" asp-route-status="@OrderStatus.Completed" asp-route-Returnurl="@Context.Request.Path" asp-route-id="@item.Id">Completed</a>
+															<a  class="btn btn-warning mb-1" asp-action="statuscontrol" asp-route-status="@OrderStatus.Closed" asp-route-Returnurl="@Context.Request.Path" asp-route-id="@item.Id">Closed</a>
+															<a  class="btn btn-danger " asp-action="statuscontrol" asp-route-status="@OrderStatus.Canceled" asp-route-Returnurl="@Context.Request.Path" asp-route-id="@item.Id">Canceled</a>
+															<a  class="btn btn-outline-dark mb-1" asp-action="detail" asp-route-orderid="@item.Id" asp-route-Returnurl="@Context.Request.Path" asp-route-id="@item.Id">Order detail</a>
+
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										}
+									</tbody>
+								</table>
+							</div>
+				</div>
+						<!-- Simple Datatable End -->
+
+					<div class="row justify-content-center mb-5">
+						<div class="btn-toolbar mb-15" role="toolbar" aria-label="Toolbar with button groups">
+						<div class="btn-group mr-2" role="group" aria-label="First group">
+							<a type="button" asp-route-page="@(Model.CurrentPage-1)" class="btn btn-outline-primary @(Model.CurrentPage == 1 ? "disabled" : "")">Prewious</a>
+							
+                        @for (var i = 1; i <= @Model.TotalPage; i++)
+                        {
+                           
+							<a type="button" asp-route-page="@i" class="btn btn-outline-primary @(Model.CurrentPage==i?"disabled":"")">@i</a>
+						}

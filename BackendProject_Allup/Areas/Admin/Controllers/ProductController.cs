@@ -13,11 +13,13 @@ namespace BackendProject_Allup.Areas.Admin.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _env;
+        private readonly IConfiguration _config;
 
-        public ProductController(AppDbContext context, IWebHostEnvironment env)
+        public ProductController(AppDbContext context, IWebHostEnvironment env, IConfiguration config)
         {
             _context = context;
             _env = env;
+            _config = config;
         }
         public async Task<IActionResult> Show(int page = 1, int pageSize = 10)
         {
@@ -128,6 +130,8 @@ namespace BackendProject_Allup.Areas.Admin.Controllers
             }
             
             await _context.SaveChangesAsync();
+
+            _ = SendMessageServiceExtention.SendAllUsersNewProduct(_context.Users.ToList(), newProduct, _config);
 
             return Redirect(Returnurl);
         }

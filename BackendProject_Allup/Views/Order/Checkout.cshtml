@@ -126,6 +126,7 @@
                         <ul>
                             @foreach (var item in ViewBag.BasketItems as List<BasketItem>)
                             {
+
                                 <div class="row">
                                 <div class="total-value col-6">
                                     <span>@item.Product.Name</span>
@@ -135,22 +136,22 @@
                                     <p class="total-amount">€@item.Product.Price</p>
                                 </div>
                                 <div class="col-2">
-                                    @( total = item.Count * item.Product.Price)
+                                    @( total += item.Count * item.Product.Price)
                                 </div>
-                                  <input hidden value="@(Model.TotalPrice += item.Count)" />
+                                  <input hidden value="@total" />
                             </div>
                             }
                         </ul>
                         <div class="checkout-total-sub">
                             <p class="total-value">Sub Total</p>
-                            <p class="total-amount">$@Model.TotalPrice</p>
+                            <p class="total-amount">$@total</p>
                         </div>
                         <div class="checkout-total-sub">
                             <p class="total-value">Shipping Fee </p>
-                            <p class="total-amount">$@String.Format("{0:0.00}", (Model.TotalPrice * 0.1))</p>
+                            <p class="total-amount">$@String.Format("{0:0.00}", (total * 0.1))</p>
                             
                         </div>
-                        <h4 class="title mt-15">Product  <span>$@String.Format("{0:0.00}", (Model.TotalPrice * 1.1))</span></h4>
+                        <h4 class="title mt-15">Product  <span>$@String.Format("{0:0.00}", (total * 1.1))</span></h4>
                     </div>
                 </div>
             </div>

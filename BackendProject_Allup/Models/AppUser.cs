@@ -5,6 +5,9 @@ namespace BackendProject_Allup.Models
     public class AppUser:IdentityUser
     {
         public string? FullName { get; set; }
+        public string? Country { get; set; }
+        public string? City { get; set; }
+        public string? Address { get; set; }
 
         public double Balance { get; set; }
         public DateTime Craeted { get; set; }

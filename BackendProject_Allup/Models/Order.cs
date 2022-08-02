@@ -10,6 +10,8 @@ namespace BackendProject_Allup.Models
         public string Surname { get; set; }
         [Required]
         public string Phone { get; set; }
+        public string InvoiceNo { get; set; }
+        public string TrackingNo { get; set; }
         [Required]
         public string Country { get; set; }
         [Required]
@@ -32,8 +34,8 @@ namespace BackendProject_Allup.Models
 
     public enum OrderStatus
     {
-        New,
-        Delivering,
+        Processing,
+        Shipped,
         Completed,
         Closed,
         Canceled,

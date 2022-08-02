@@ -16,7 +16,7 @@ namespace BackendProject_Allup.Helpers
         }
 
 
-        public bool SendEmail(string UserEmail,string subject,string body,string filename, byte[] bytes)
+        public bool SendEmail(string UserEmail,string subject,string body,string filename=null, byte[] bytes=null)
         {
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress(_privateEmail);
@@ -28,7 +28,7 @@ namespace BackendProject_Allup.Helpers
             mailMessage.IsBodyHtml = true;
             mailMessage.Body =body;
 
-            mailMessage.Attachments.Add(new Attachment(new MemoryStream(bytes), filename));
+           if(filename!=null && bytes!=null) mailMessage.Attachments.Add(new Attachment(new MemoryStream(bytes), filename));
 
             SmtpClient client = new SmtpClient();
             client.Credentials = new System.Net.NetworkCredential(_privateEmail, _privatePassword);

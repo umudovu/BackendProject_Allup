@@ -12,6 +12,8 @@ namespace BackendProject_Allup.ViewModels
         public List<Brand> Brands { get; set; }
         public List<Comment> Comments { get; set; }
         public string Username { get; set; }
+        public Basket UserBakset { get; set; }
+        public int UserBasketProductCount { get; set; }
 
     }
 }

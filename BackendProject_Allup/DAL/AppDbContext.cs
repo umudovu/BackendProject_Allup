@@ -26,6 +26,7 @@ namespace BackendProject_Allup.DAL
         public DbSet<TagProduct> TagProducts { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Basket> Baskets { get; set; }
+        public DbSet<Subscribe> Subscribes { get; set; }
         public DbSet<BasketItem> BasketItems { get; set; }
 
         //protected override void OnModelCreating(ModelBuilder builder)

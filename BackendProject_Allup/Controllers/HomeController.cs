@@ -1,4 +1,5 @@
 ﻿using BackendProject_Allup.DAL;
+using BackendProject_Allup.Models;
 using BackendProject_Allup.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +45,21 @@ namespace BackendProject_Allup.Controllers
             if (product == null) return NotFound();
 
             return PartialView("_PartialProductModal", product);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Subscribe(Subscribe email)
+        {
+            
+
+            Subscribe subscribe = new()
+            {
+                Email = email.Email,
+            };
+
+            _context.Subscribes.Add(subscribe);
+            _context.SaveChanges();
+
+            return Ok(email);
         }
 
     }

@@ -43,7 +43,7 @@
                             <ul class="product-single-thumb">
                                  @foreach (var item in Model.Product.ProductImages)
                                {
-                                  <li><img src="~/assets/images/product-quick/product-1.jpg" alt="product"></li>
+                                  <li><img src="~/assets/@item.ImageUrl" alt="product"></li>
                                    
                                }
                                
@@ -117,14 +117,22 @@
                             <div class="product-quantity mt-25">
                                 <h5 class="title">Quantity</h5>
                                 <div class="quantity mt-15 d-flex">
+                                     <a asp-controller="dbbasket" asp-action="minus" asp-route-id="@Model.Product.Id" asp-route-ReturnUrl="@Context.Request.Path" class="sub">
                                     <button type="button" class="sub"><i class="fal fa-minus"></i></button>
-                                    <input type="text" value="1" />
-                                    <button type="button" class="add"><i class="fal fa-plus"></i></button>
+                                     </a>
+                                   
+                                    <input type="number" value="@Model.UserBasketProductCount" />
+                                     <a asp-controller="dbbasket" asp-action="plus" asp-route-id="@Model.Product.Id" asp-route-ReturnUrl="@Context.Request.Path" class="sub">
+                                    <button type="button" class="sub"><i class="fal fa-plus"></i></button>
+                                     </a>
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="addcart">
-                            <button><i class="icon ion-bag"></i> Add to cart</button>
+                           <a asp-controller="dbbasket" asp-action="additem" asp-route-id="@Model.Product.Id" asp-route-ReturnUrl="@Context.Request.Path" >
+                                <button><i class="icon ion-bag"></i> Add to cart</button>
+                           </a>
                         </div>
                         <div class="product-wishlist-compare">
                             <ul class="d-flex flex-wrap">

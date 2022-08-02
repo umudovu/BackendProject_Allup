@@ -24,6 +24,7 @@
                                                     <th>Total</th>
                                                     <th>Payment</th>
                                                     <th>Status</th>
+                                                    <th>Tracking No</th>
                                                     <th>Action</th>
 										</tr>
 									</thead>
@@ -43,17 +44,17 @@
                                                     <td>@item.PaymantMethod</td>
                                                     @switch (item.OrderStatus)
                                                     {
-                                                        case OrderStatus.New:
-                                                            <td style="height:20px;width:10px;"><span class="badge badge-primary">New</span></td>
+                                                        case OrderStatus.Processing:
+                                                            <td style="height:20px;width:10px;"><span class="badge badge-primary">Processing</span></td>
                                                             break;
-                                                        case OrderStatus.Delivering:
-                                                            <td style="height:20px;width:10px;"><span class="badge badge-info">Delivering</span></td>
+                                                        case OrderStatus.Shipped:
+                                                            <td style="height:20px;width:10px;"><span class="badge badge-info">Shipped</span></td>
                                                             break;
                                                         case OrderStatus.Completed:
                                                             <td style="height:20px;width:10px;"><span class="badge badge-success">Completed</span></td>
                                                             break;
                                                         case OrderStatus.Closed:
-                                                            <td style="height:20px;width:10px;"><span class="badge badge-secondary">Closed</span></td>
+                                                            <td style="height:20px;width:10px;"><span class="badge badge-warning">Closed</span></td>
                                                             break;
                                                         case OrderStatus.Canceled:
                                                             <td style="height:20px;width:10px;"><span class="badge badge-danger">Canceled</span></td>
@@ -61,19 +62,22 @@
                                                         default:
                                                             break;
                                                     }
-
-											<td>
+											
+													<td>@item.TrackingNo</td>
+													
+													<td>
 												<div class="dropdown">
 													<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 														<i class="dw dw-more"></i>
 													</a>
 													<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 														<div class="d-flex" style="flex-direction: column;">
-															<a  class="btn btn-primary  mb-1" asp-action="statuscontrol" asp-route-status="New" asp-route-Returnurl="@Context.Request.Path" asp-route-id="@item.Id">New</a>
-															<a  class="btn btn-secondary mb-1" asp-action="statuscontrol" asp-route-status="Delivering" asp-route-Returnurl="@Context.Request.Path" asp-route-id="@item.Id">Delivering</a>
-															<a  class="btn btn-success mb-1" asp-action="statuscontrol" asp-route-status="Completed" asp-route-Returnurl="@Context.Request.Path" asp-route-id="@item.Id">Completed</a>
-															<a  class="btn btn-warning mb-1" asp-action="statuscontrol" asp-route-status="Closed" asp-route-Returnurl="@Context.Request.Path" asp-route-id="@item.Id">Closed</a>
-															<a  class="btn btn-danger " asp-action="statuscontrol" asp-route-status="Canceled" asp-route-Returnurl="@Context.Request.Path" asp-route-id="@item.Id">Canceled</a>
+															<a  class="btn btn-primary  mb-1" asp-action="statuscontrol" asp-route-orderStatus="@OrderStatus.Processing" asp-route-Returnurl="@Context.Request.Path" asp-route-id="@item.Id">Processing</a>
+															<a  class="btn btn-secondary mb-1" asp-action="statuscontrol" asp-route-orderStatus="@OrderStatus.Shipped" asp-route-Returnurl="@Context.Request.Path" asp-route-id="@item.Id">Shipped</a>
+															<a  class="btn btn-success mb-1" asp-action="statuscontrol" asp-route-orderStatus="@OrderStatus.Completed" asp-route-Returnurl="@Context.Request.Path" asp-route-id="@item.Id">Completed</a>
+															<a  class="btn btn-warning mb-1" asp-action="statuscontrol" asp-route-orderStatus="@OrderStatus.Closed" asp-route-Returnurl="@Context.Request.Path" asp-route-id="@item.Id">Closed</a>
+															<a  class="btn btn-danger mb-2" asp-action="statuscontrol" asp-route-orderStatus="@OrderStatus.Canceled" asp-route-Returnurl="@Context.Request.Path" asp-route-id="@item.Id">Canceled</a>
+															<a  class="btn btn-outline-dark mb-1" asp-action="detail" asp-route-orderid="@item.Id" asp-route-Returnurl="@Context.Request.Path" asp-route-id="@item.Id">Order detail</a>
 
 														</div>
 													</div>

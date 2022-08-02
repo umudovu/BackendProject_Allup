@@ -17,9 +17,6 @@
                               <a id="pills-order-tab" data-toggle="pill" href="#pills-order" role="tab" aria-controls="pills-order" aria-selected="false"><i class="far fa-shopping-cart"></i> Order</a>
                             </li>
                             <li>
-                              <a id="pills-download-tab" data-toggle="pill" href="#pills-download" role="tab" aria-controls="pills-download" aria-selected="false"><i class="far fa-cloud-download"></i> Download</a>
-                            </li>
-                            <li>
                               <a id="pills-payment-tab" data-toggle="pill" href="#pills-payment" role="tab" aria-controls="pills-payment" aria-selected="false"><i class="fal fa-credit-card"></i> Payment Method</a>
                             </li>
                             <li>
@@ -29,7 +26,7 @@
                               <a id="pills-account-tab" data-toggle="pill" href="#pills-account" role="tab" aria-controls="pills-account" aria-selected="false"><i class="far fa-user"></i> Account Details</a>
                             </li>
                             <li>
-                                <a href="login.html"><i class="far fa-sign-out-alt"></i> Logout</a>
+                                <a asp-controller="account" asp-action="logout"><i class="far fa-sign-out-alt"></i> Logout</a>
                             </li>
                           </ul>
                     </div>
@@ -57,7 +54,7 @@
                                         <thead>
                 <tr>
                     <th class="no">No</th>
-                    <th class="name">Name</th>
+                    <th class="name">Tracking No</th>
                     <th class="date">Date</th>
                     <th class="date">Country</th>
                     <th class="date">Adress</th>
@@ -73,7 +70,7 @@
                     count++;
                 <tr>
                     <td>@count</td>
-                    <td>@item.FirstName  @item.Surname</td>
+                    <td>@item.TrackingNo</td>
                     <td>@item.CreatedAt.Value.Date.ToLongDateString()</td>
                     <td>@item.Country / @item.City</td>
                     <td>@item.Address</td>
@@ -88,41 +85,128 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="pills-download" role="tabpanel" aria-labelledby="pills-download-tab">
-                            <div class="my-account-download account-wrapper">
-                                <h4 class="account-title">Download</h4>
-                                <div class="account-table text-center mt-30 table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th class="name">Product</th>
-                                                <th class="date">Date</th>
-                                                <th class="status">Expire</th>
-                                                <th class="action">Download</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Mostarizing Oil</td>
-                                                <td>Aug 22, 2020</td>
-                                                <td>Yes</td>
-                                                <td><a href="#">Download File</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Katopeno Altuni</td>
-                                                <td>July 22, 2020</td>
-                                                <td>Never</td>
-                                                <td><a href="#">Download File</a></td>
-                                            </tr>
-                                        </tbody>
-                                      </table>
-                                </div>
-                            </div>
-                        </div>
+                      
                         <div class="tab-pane fade" id="pills-payment" role="tabpanel" aria-labelledby="pills-payment-tab">
                             <div class="my-account-payment account-wrapper">
-                                <h4 class="account-title">Payment Method</h4>
-                                <p class="mt-30">You Can't Saved Your Payment Method yet.</p>
+                                <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+                                    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                                    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                                    <!------ Include the above in your HEAD tag ---------->
+
+                                    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+
+                                    <div class="container">
+
+                                    <div class="row">
+	                                    <aside class="col-sm-6">
+                                   
+
+
+	                                    </aside> <!-- col.// -->
+	                                    <aside class="col-12">
+                                  
+
+                                    <article class="card">
+                                    <div class="card-body p-5">
+
+                                    <ul class="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
+	                                    <li class="nav-item">
+		                                    <a class="nav-link active" data-toggle="pill" href="#nav-tab-card">
+		                                    <i class="fa fa-credit-card"></i> Credit Card</a></li>
+	                                    <li class="nav-item">
+		                                    <a class="nav-link" data-toggle="pill" href="#nav-tab-paypal">
+		                                    <i class="fab fa-paypal"></i>  Paypal</a></li>
+	                                    <li class="nav-item">
+		                                    <a class="nav-link" data-toggle="pill" href="#nav-tab-bank">
+		                                    <i class="fa fa-university"></i>  Bank Transfer</a></li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="nav-tab-card">
+	                                    
+	                                    <form method="post" asp-action="payment" enctype="multipart/form-data">
+	                                    <div class="form-group">
+		                                    <label for="username">Amount you want to pay</label>
+		                                    <input type="text" class="form-control" name="Amount" placeholder="Amount">
+	                                    </div> 
+                                        
+                                        <div class="form-group">
+		                                    <label for="username">Full name (on the card)</label>
+		                                    <input type="text" class="form-control" name="Fullname" placeholder="Fullname" required="">
+	                                    </div> <!-- form-group.// -->
+
+	                                    <div class="form-group">
+		                                    <label for="cardNumber">Card number</label>
+		                                    <div class="input-group">
+			                                    <input type="text" class="form-control" name="CardNumber" placeholder="0000 0000 0000 0000">
+			                                    <div class="input-group-append">
+				                                    <span class="input-group-text text-muted">
+					                                    <i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>   
+					                                    <i class="fab fa-cc-mastercard"></i> 
+				                                    </span>
+			                                    </div>
+		                                    </div>
+	                                    </div> <!-- form-group.// -->
+
+	                                    <div class="row">
+	                                        <div class="col-sm-8">
+	                                            <div class="form-group">
+	                                                <label><span class="hidden-xs">Expiration</span> </label>
+	        	                                    <div class="input-group">
+	        		                                    <input type="number" class="form-control" placeholder="MM" name="Month">
+		                                                <input type="number" class="form-control" placeholder="YY" name="Month">
+	        	                                    </div>
+	                                            </div>
+	                                        </div>
+	                                        <div class="col-sm-4">
+	                                            <div class="form-group">
+	                                                <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
+	                                                <input type="number" name="CVV" class="form-control" required="" placeholder="***">
+	                                            </div> <!-- form-group.// -->
+	                                        </div>
+	                                    </div> <!-- row.// -->
+	                                    <button class="subscribe btn btn-primary btn-block" type="submit"> Confirm  </button>
+	                                    </form>
+                                    </div> <!-- tab-pane.// -->
+                                    <div class="tab-pane fade" id="nav-tab-paypal">
+                                    <p>Paypal is easiest way to pay online</p>
+                                    <p>
+                                    <button type="button" class="btn btn-primary"> <i class="fab fa-paypal"></i> Log in my Paypal </button>
+                                    </p>
+                                    <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                    tempor incididunt ut labore et dolore magna aliqua. </p>
+                                    </div>
+                                    <div class="tab-pane fade" id="nav-tab-bank">
+                                    <p>Bank accaunt details</p>
+                                    <dl class="param">
+                                      <dt>BANK: </dt>
+                                      <dd> THE WORLD BANK</dd>
+                                    </dl>
+                                    <dl class="param">
+                                      <dt>Accaunt number: </dt>
+                                      <dd> 12345678912345</dd>
+                                    </dl>
+                                    <dl class="param">
+                                      <dt>IBAN: </dt>
+                                      <dd> 123456789</dd>
+                                    </dl>
+                                    <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                    tempor incididunt ut labore et dolore magna aliqua. </p>
+                                    </div> <!-- tab-pane.// -->
+                                    </div> <!-- tab-content .// -->
+
+                                    </div> <!-- card-body.// -->
+                                    </article> <!-- card.// -->
+
+
+	                                    </aside> <!-- col.// -->
+                                    </div> <!-- row.// -->
+
+                                    </div> 
+                                    <!--container end.//-->
+
+                                    </article>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="pills-address" role="tabpanel" aria-labelledby="pills-address-tab">

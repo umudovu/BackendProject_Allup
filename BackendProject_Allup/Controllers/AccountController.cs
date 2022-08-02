@@ -5,7 +5,6 @@ using BackendProject_Allup.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SelectPdf;
 using System.Security.Claims;
 using static BackendProject_Allup.Helpers.Helpers;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
@@ -68,9 +67,7 @@ namespace BackendProject_Allup.Controllers
                 return View(registerVM);
             }
 
-            var patch = @"C:\Users\umudo\Desktop\Asp.net\BackendProject_Allup\BackendProject_Allup\Views\Order\mail.cshtml";
-
-            var html= System.IO.File.ReadAllText(patch);
+            
 
             //EmailService emailService = new EmailService(_config.GetSection("ConfirmationParams:Email").Value, _config.GetSection("ConfirmationParams:Password").Value);
             //emailService.SendEmail(registerVM.Email,"Register",html);
@@ -200,29 +197,6 @@ namespace BackendProject_Allup.Controllers
         //}
 
 
-        public  byte[]  Convertpdt()
-        {
-            var mobileView = new HtmlToPdf();
-            
-            var fullView = new HtmlToPdf();
-            fullView.Options.WebPageWidth = 1920;
-                
-            var pdf = fullView.ConvertUrl("https://localhost:44330/shop/index");
-            
-            var pdfBytes = pdf.Save();
-
-            //using (var streamWriter = new StreamWriter(@"C:\Users\umudo\Desktop\Asp.net\BackendProject_Allup\BackendProject_Allup\wwwroot\Pdfs\pdf.pdf"))
-            //{
-            //    await streamWriter.BaseStream.WriteAsync(pdfBytes, 0, pdfBytes.Length);
-            //}
-
-
-            EmailService emailService = new EmailService(_config.GetSection("ConfirmationParams:Email").Value, _config.GetSection("ConfirmationParams:Password").Value);
-            emailService.SendEmail("umudau@code.edu.az","mail", "Sehife", "Register", pdfBytes);
-
-            return pdfBytes;
-
-
-        }
+        
     }
 }

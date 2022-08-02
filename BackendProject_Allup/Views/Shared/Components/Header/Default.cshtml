@@ -24,7 +24,7 @@
                         </div>
                         <div class="header-menu-nav">
                             <ul class="menu-nav">
-                                <li><a href="compare.html"><i class="fal fa-repeat"></i> Compare (0)</a></li>
+                                <li><a asp-controller="myaccount" asp-action="index"><i class="fal fa-repeat"></i> Balance: (@Model.UserBalance)</a></li>
                                 <li><a asp-controller="basket" asp-action="index"><i class="fal fa-heart"></i> Wishlist(0)</a></li>
                                 <li>
                                     <div class="dropdown">
@@ -90,19 +90,18 @@
                                     </div>
                                 </div>
                                 <div class="header-search media-body">
-                                    <form action="#">
+                                    <form method="post" asp-controller="shop" asp-action="SortByCategoryName">
                                         <div class="search-category">
                                             <select>
-                                                
                                                 @foreach (var item in @Model.Categories)
                                                 {
-                                                    <option value="112">@item.Name</option>
+                                                    <option value="@item.Id">@item.Name</option>
                                                 }
                                                 
                                             </select>
                                         </div>
                                         <input type="text" placeholder="Enter your search key ... ">
-                                        <button><i class="icon ion-android-search"></i></button>
+                                        <button type="submit"><i class="icon ion-android-search"></i></button>
                                     </form>
                                 </div>
 

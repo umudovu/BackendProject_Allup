@@ -58,7 +58,8 @@ namespace BackendProject_Allup.Controllers
 
             return View(list);
         }
-        
+
+       
         public async Task<IActionResult> SortByCategoryName(int? categoryid)
         {
             if (categoryid == null) return NotFound();
@@ -84,7 +85,11 @@ namespace BackendProject_Allup.Controllers
             {
                 return NotFound();
             }
-
+            AppUser user = new ();
+            if (User.Identity.IsAuthenticated)
+            {
+                user = await _userManager.FindByNameAsync(User.Identity.Name);
+            }
             Product dbProcduct = _context.Products
                     .Include(p => p.ProductImages)
                     .Include(p => p.Brand)
@@ -101,6 +106,15 @@ namespace BackendProject_Allup.Controllers
             shopVM.Brands=_context.Brands.ToList();
             shopVM.Reviews = _context.Reviews.ToList();
             shopVM.Comments = _context.Comments.Include(c=>c.User).Where(c => c.ProductId == dbProcduct.Id).ToList();
+
+            
+            shopVM.UserBakset = _context.Baskets
+                .Include(x=>x.BasketItems)    
+                .FirstOrDefault(x => x.UserId == user.Id);
+
+            var exsist = shopVM.UserBakset.BasketItems.FirstOrDefault(x => x.ProductId == id);
+            if (exsist != null) shopVM.UserBasketProductCount = exsist.Count;
+
 
 
             return View(shopVM);

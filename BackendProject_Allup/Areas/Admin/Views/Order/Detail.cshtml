@@ -1,0 +1,94 @@
+﻿@model Order
+@{
+    ViewData["Title"] = "Detail";
+    Layout = null;
+}
+
+<!doctype html>
+<html class="no-js" lang="en">
+
+
+<!-- Mirrored from demo.hasthemes.com/allup/allup/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 04 Sep 2020 10:46:32 GMT -->
+<head>
+    <meta charset="utf-8">
+
+    <!--====== Title ======-->
+    <title>Allup - Electronics Responsive eCommerce HTML Template.</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--====== Favicon Icon ======-->
+    <link rel="shortcut icon" href="~/assets/images/favicon.png" type="image/png">
+
+
+    <!-- CSS
+	============================================ -->
+
+    <!--===== Vendor CSS (Bootstrap & Icon Font) =====-->
+    
+    <link rel="stylesheet" href="~/assets/css/plugins/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/css/plugins/ionicons.min.css">
+    <link rel="stylesheet" href="~/assets/css/plugins/fontawesome.min.css">
+
+    <!--===== Plugins CSS (All Plugins Files) =====-->
+    
+    <link rel="stylesheet" href="~/assets/css/plugins/slick.css">
+    <link rel="stylesheet" href="~/assets/css/plugins/animate.css">
+    <link rel="stylesheet" href="~/assets/css/plugins/jquery-ui.min.css">
+    <link rel="stylesheet" href="~/assets/css/plugins/default.css">
+
+    <!--====== Main Style CSS ======-->
+    <link rel="stylesheet" href="~/assets/css/style.css">
+
+
+    <!--====== Use the minified version files listed below for better performance and remove the files listed above ======-->
+
+    <!-- <link rel="stylesheet" href="~/assets/css/vendor/plugins.min.css">
+    <link rel="stylesheet" href="~/assets/css/style.min.css"> -->
+
+</head>
+
+<body>
+
+   <div class="container" style="width: 1200px; margin-top: 60px; display: flex;" id="full">
+        <div class="row" style="width:1200px;position: relative;">
+            <div class="col" style="display:flex;justify-content:start;align-items:start;flex-direction:column;min-width:900px;padding-right: 30px;  border:1px dashed gray">
+                <table class="table" style="width:100%;" id="mainTable">
+                    <thead>
+                        <tr style="font-size:14px;font-family:inter,sans-serif;color:#afb0b6;font-weight: 100;">
+                            <th scope="col">img</th>
+                            <th scope="col" style="width: 402px;padding: 8px;">Product</th>
+                            <th scope="col" style="width:80px;padding: 8px;">Price</th>
+                            <th scope="col" style="width:130px;padding: 8px;">Quantity</th>
+                            <th scope="col" style="width:82px;padding: 8px;">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody style="width: 100%;">
+                        @foreach (var item in Model.OrderItems)
+                        {
+                            <tr style="width: 100%;">
+                                <td><img src="~/assets/@item.Product.ProductImages.Find(i=>i.IsMain==true).ImageUrl" style="width: 70px; height: 70px;"></td>
+                                <td style="padding-top: 30px;">@item.Product.Name</td>
+                                <td style="padding-top: 30px;">$@item.Price</td>
+                                <td style="padding-top: 30px;">@item.Count</td>
+                                <td style="padding: 30px;">$@item.Total</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div style="padding-right:5px;border:3px dashed gray;font-size:22px;position:absolute;right:0px;bottom:0px;">
+                    <span style="margin-right:5px;color:dodgerblue">Total:</span>
+                    <span style="color:dimgrey">$@Model.TotalPrice</span>
+                </div>
+                <div class="checkout-btn" style="display:flex;margin:15px; justify-content:center;align-items:center;flex-direction:row;">
+                    <a asp-controller="order" asp-action="show" class="main-btn main-btn-2">Back to Orders</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<!-- Mirrored from demo.hasthemes.com/allup/allup/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 04 Sep 2020 10:47:16 GMT -->
+</html>

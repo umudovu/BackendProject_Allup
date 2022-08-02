@@ -1,0 +1,68 @@
+﻿
+@model  List<AppUser>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Simple Datatable start -->
+<div class="container">
+				<div class="card-box mb-30">
+					<div class="pd-20">
+						<h4 class="text-blue h4">Users</h4>
+					</div>
+					<div class="pb-20">
+						<table class="data-table table stripe hover nowrap">
+							<thead>
+								<tr>
+									<th class="table-plus">Name</th>
+									<th>Username</th>
+									<th>Email</th>
+									<th>Balance</th>
+									<th>Order Count</th>
+									<th class="datatable-nosort">Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var item in Model)
+								{
+									
+								<tr>
+									<td class="table-plus">@item.FullName</td>
+									<td>@item.UserName</td>
+									<td>@item.Email</td>
+									<td>$@item.Balance </td>
+									<td>@item.Orders.Count</td>
+									<td>
+										<div class="dropdown">
+											<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+												<i class="dw dw-more"></i>
+											</a>
+											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+												<a class="dropdown-item" asp-action="detail" asp-route-id="@item.Id"asp-route-ReturnUrl="@Context.Request.Path"><i class="dw dw-eye"></i> View</a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				</div>
+				<!-- Simple Datatable End -->
+
+
+		@section Scripts{
+
+			<script src="~/Admin/src/plugins/datatables/js/dataTables.buttons.min.js"></script>
+			<script src="~/Admin/src/plugins/datatables/js/buttons.bootstrap4.min.js"></script>
+			<script src="~/Admin/src/plugins/datatables/js/buttons.print.min.js"></script>
+			<script src="~/Admin/src/plugins/datatables/js/buttons.html5.min.js"></script>
+			<script src="~/Admin/src/plugins/datatables/js/buttons.flash.min.js"></script>
+			<script src="~/Admin/src/plugins/datatables/js/pdfmake.min.js"></script>
+			<script src="~/Admin/src/plugins/datatables/js/vfs_fonts.js"></script>
+			<!-- Datatable Setting js -->
+			<script src="~/Admin/vendors/scripts/datatable-setting.js"></script>
+			}

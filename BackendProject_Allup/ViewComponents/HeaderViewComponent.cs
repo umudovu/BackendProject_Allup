@@ -29,7 +29,9 @@ namespace BackendProject_Allup.ViewComponents
             if (User.Identity.IsAuthenticated)
             {
                 AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
-                home.Username = user.FullName.Split(" ")[0];
+                home.Username = user.FullName;
+                home.UserBalance = user.Balance;
+                
             }
             home.Bio = _context.Bios.FirstOrDefault();
 

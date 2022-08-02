@@ -76,19 +76,20 @@ namespace BackendProject_Allup.Controllers
 
             if (id == null) return NoContent();
 
-            Product product = _context.Products.FirstOrDefault(x => x.Id == id);
-            if (product == null) return NoContent();
-
+            Product dbproduct = _context.Products.FirstOrDefault(x => x.Id == id);
+            if (dbproduct == null) return NoContent();
 
             List<BasketItem> basketItems = _context.BasketItems.Where(b => b.BasketId == basket.Id).ToList(); ;
 
             BasketItem isexsist = basketItems.Find(p => p.ProductId == id);
 
+            
+
             if (isexsist == null)
             {
                 BasketItem basketItem = new BasketItem();
 
-                basketItem.ProductId = product.Id;
+                basketItem.ProductId = dbproduct.Id;
                 basketItem.Count = 1;
                 basketItem.BasketId = basket.Id;
 
@@ -96,11 +97,12 @@ namespace BackendProject_Allup.Controllers
             }
             else
             {
+                if (dbproduct.StockCount < isexsist.Count) return RedirectToAction("index", "shop");
                 isexsist.Count++;
             }
 
             _context.SaveChanges();
-
+            if (ReturnUrl != null) return Redirect(ReturnUrl);
 
             return RedirectToAction("index", "shop");
         }
@@ -126,7 +128,7 @@ namespace BackendProject_Allup.Controllers
             return RedirectToAction("index");
         }
 
-        public IActionResult Plus(int id)
+        public IActionResult Plus(int id,string Returnurl)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -137,6 +139,7 @@ namespace BackendProject_Allup.Controllers
             List<BasketItem> basketItems = _context.BasketItems.Where(b => b.BasketId == basket.Id).ToList();
 
             BasketItem plusItem = basketItems.Find(p => p.ProductId == id);
+            if(plusItem==null) return RedirectToAction("additem", new { id = id, Returnurl = Returnurl });
 
             var  dbProduct = _context.Products.FirstOrDefault(p => p.Id == id);
 
@@ -145,11 +148,12 @@ namespace BackendProject_Allup.Controllers
                 _context.BasketItems.FirstOrDefault(b => b.Id == plusItem.Id).Count++;
                 _context.SaveChanges();
             }
+            if (Returnurl != null) return Redirect(Returnurl);
 
             return RedirectToAction("index", "dbbasket");
         }
 
-        public IActionResult Minus(int id)
+        public IActionResult Minus(int id,string Returnurl)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -161,14 +165,26 @@ namespace BackendProject_Allup.Controllers
 
             BasketItem decreaseItem = basketItems.FirstOrDefault(p => p.ProductId == id);
 
+            if (decreaseItem == null) return RedirectToAction("additem", new {id=id,Returnurl = Returnurl});
+
+
             if (decreaseItem.Count > 1)
             {
                 _context.BasketItems.FirstOrDefault(b => b.Id == decreaseItem.Id).Count--;
-                _context.SaveChanges();
+                
             }
+            else
+            {
+                _context.BasketItems.Remove(decreaseItem);
+            }
+            _context.SaveChanges();
 
+
+            if (Returnurl != null) return Redirect(Returnurl);
             return RedirectToAction("index", "dbbasket");
         }
+
+        
 
     }
 }

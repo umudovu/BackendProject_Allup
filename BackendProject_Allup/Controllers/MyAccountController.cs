@@ -19,6 +19,8 @@ namespace BackendProject_Allup.Controllers
         public IActionResult Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null) return RedirectToAction("login", "account");
+
             var orders = _context.Orders.Where(o => o.UserId == userId).ToList();
 
             MyAccountVM myAccountVM = new MyAccountVM()
@@ -26,6 +28,23 @@ namespace BackendProject_Allup.Controllers
                 Orders = orders
             };
             return View(myAccountVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Payment(PaymentVM payment)
+            {
+            if (!ModelState.IsValid) return RedirectToAction("index");
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _context.Users.FirstOrDefault(x=>x.Id==userId);
+
+            if (user == null) return NotFound();
+
+            user.Balance += payment.Amount;
+
+            _context.SaveChanges();
+
+
+            return RedirectToAction("index");
         }
     }
 }
